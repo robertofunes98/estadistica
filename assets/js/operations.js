@@ -147,13 +147,12 @@ function getBaseLog(base, number) {
 
 
   function centralTendence(agroupNumbers,columns,operations){
-    //var header = prompt("Que variable desea evaluar?");
-
+      
     var evaluationData = htDataGrid.getSourceDataAtCol(columns);
     
     var dataToWork = [];
-
-    var component = ` <ul class="list-unstyled"> ` 
+    //Variable donde se almacenara las respuestas
+    var html = ` <ul class="list-unstyled"> ` 
     //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
     evaluationData.forEach(element => {
         if(element!=undefined){
@@ -164,50 +163,58 @@ function getBaseLog(base, number) {
     console.log(dataToWork);
     //Valido si selecciono numeros agrupados
         if(agroupNumbers=="no"){
+            //Si no selecciono recorro el arreglo de operaciones que selecciono
             operations.forEach(element => {
                 switch(element){
+                    //Caso Mediana
                     case "1":
                     var temp=""; 
+                        //Validaciones de errores   
                         if(jStat.median(dataToWork)+""=="NaN" || jStat.median(dataToWork)===NaN || jStat.median(dataToWork)===undefined){
                             temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
                         }
                         else{
+                            //añado la respuesta a lo que se va mostrar
                             temp+=jStat.median(dataToWork);
-                            console.log(operations +"Columnas "+columns+"DATOS "+dataToWork.length);
                         }
-                    component += `<li>Mediana: ` +temp+` </li>`;
+                    html += `<li>Mediana: ` +temp+` </li>`;
                     break;
+                    //Caso Moda
                     case "2": 
                     var temp=""; 
+                        //Validaciones de errores
                         if(jStat.mode(dataToWork)+""=="NaN" || jStat.mode(dataToWork)===NaN || jStat.mode(dataToWork)===undefined){
                             temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
                         }
                         else{
+                            //añado la respuesta a lo que se va mostrar
                             temp+=jStat.mode(dataToWork);
                         }
-                    component += `<li>Moda: ` +temp+` </li>`;
+                    html += `<li>Moda: ` +temp+` </li>`;
                     break;
+                    //Caso media
                     case "3": 
                     var temp=""; 
+                        //Validaciones de errores
                         if( jStat.mean(dataToWork)+""=="NaN" || jStat.mean(dataToWork)===NaN || jStat.mean(dataToWork)===undefined){
                             temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
                         }
                         else{
                             temp+=jStat.mean(dataToWork)+"";
-                           
                         }
-                    component += `<li>Media: ` +temp+` </li>`;
+                        //añado la respuesta a lo que se va mostrar
+                    html += `<li>Media: ` +temp+` </li>`;
                     break;
                     default:
-                        component+="Algo esta jodido"+operations;
+                        html+="Algo esta jodido"+operations;
                         break;
                 }
             });
         }else{
-            component+="Aca no ";
+            //Aca entraria si es de datos agrupados
+            html+="Aca no ";
         }
 
-    component +=`</ul>`;
-    //console.log(component);
-  return component;
+    html +=`</ul>`;
+  return html;
   }
