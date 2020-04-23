@@ -65,7 +65,7 @@ function countUnique(iterable) {
     return new Set(iterable);
 }
 
-function generarTabla1()
+function generateFrequencyTableForCualitative()
 {
     var header = prompt("Que variable desea evaluar?");
 
@@ -207,6 +207,85 @@ function generarTabla1()
         document.getElementById('response').innerHTML=result+result2;
     }
 }
+
+
+function generateFrequencyTableForCuantitative(variablesToEvaluate)
+{
+    var evaluationDataClean = [];
+    var evaluationVariableNameClean = [];
+
+    variablesToEvaluate.forEach(element => {
+        var evaluationData = htDataGrid.getSourceDataAtCol(element);
+
+        var evaluationVariableName = htDataGrid.getColHeader(element);
+
+        var temp = evaluationData.filter(Boolean);
+
+        if(temp.length !== 1)
+        {
+            alert("Por favor revise sus variables que esten completas y que no tengan mas de un valor");
+            return;
+        }
+        else
+        {
+            evaluationDataClean.push(temp[0]);
+            evaluationVariableNameClean.push(evaluationVariableName)
+        }
+    });
+
+    let totalFrequency = 0.0, totalRelativeFrequency=0;
+
+    var frequencyData =
+        [
+            ['Clase', 'Frecuencia', 'Frecuencia relativa']
+        ];
+
+    evaluationDataClean.forEach((element) => {
+        totalFrequency += parseFloat(element);
+    });
+
+    for (let i = 0; i < evaluationDataClean.length; i++) {
+
+        totalRelativeFrequency+=(evaluationDataClean[i]/totalFrequency);
+
+        frequencyData.push([evaluationVariableNameClean[i], evaluationDataClean[i], evaluationDataClean[i]/totalFrequency]);
+    }
+
+    var result = "La amplitud o rango es: "+null+
+        `<br>El numero de clases es: `+evaluationDataClean.length+
+        `<br>El ancho de clase es: `+ null+
+        `<br><br>`;
+
+    var result2="";
+
+    result2 += "<table class='table table-striped table-dark'>"
+
+    for (let index = 0; index < frequencyData.length; index++) {
+
+        result2 +=
+            `<tr>
+            <td>`+frequencyData[index][0]+`</td>
+            <td>`+frequencyData[index][1]+`</td>
+            <td>`+frequencyData[index][2]+`</td>
+        </tr>`;
+
+    }
+    result2 +=
+        `<tr>
+            <td>Total</td>
+            <td>`+totalFrequency+`</td>
+            <td>`+totalRelativeFrequency+`</td>
+        </tr>`;
+
+
+    result2 += "</table>"
+
+    document.getElementById('response').innerHTML=result+result2;
+
+}
+
+
+
 function getBaseLog(base, number)
 {
     return Math.log(number) / Math.log(base);
