@@ -212,8 +212,7 @@ function getBaseLog(base, number)
     return Math.log(number) / Math.log(base);
 }
 
-  function centralTendence(agroupNumbers,columns,operations){
-
+function centralTendence(agroupNumbers,columns,operations){
     var evaluationData = htDataGrid.getSourceDataAtCol(columns);
 
     var dataToWork = [];
@@ -282,5 +281,5 @@ function getBaseLog(base, number)
         }
 
     html +=`</ul>`;
-  return html;
-  }
+    return html;
+}
