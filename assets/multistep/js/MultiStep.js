@@ -49,10 +49,10 @@
         final: 'Are you sure you want to confirm?',
         finalLabel: 'Complete',
         title: '',
-        prevText: 'Previous',
+        prevText: 'Anterior',
         skipText: 'Skip',
-        nextText: 'Next',
-        finishText: 'Finish',
+        nextText: 'Siguiente',
+        finishText: 'Cerrar',
         modalSize: 'md',
         onClose: function() {
 
@@ -250,10 +250,16 @@
                 var nextIdx = $this.currentStepIdx;
                 if (nextIdx >= $this.stepsCount + 1) {
                     $this.element.modal('hide');
+                  
                     return;
                 }
                 if (nextIdx >= $this.stepsCount) {
                     $this.next.text($this.options.finishText);
+                    $this.next.addClass("finish_modal")
+                    // console.log($this.options.title);
+                    if($this.options.title=='<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>'){
+                        valuesFromMTC();
+                    }
                 } else {
                     $this.next.text($this.options.nextText);
                 }

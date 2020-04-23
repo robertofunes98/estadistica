@@ -1,8 +1,9 @@
 var htDataGrid;
-var headers;
+ var headers;
 
 $( document ).ready(function() {
     initGrid();
+    
 });
 
 function initGrid()
@@ -139,4 +140,74 @@ function generarTabla1()
 
 function getBaseLog(base, number) {
     return Math.log(number) / Math.log(base);
+  }
+
+
+
+
+
+  function centralTendence(agroupNumbers,columns,operations){
+    //var header = prompt("Que variable desea evaluar?");
+
+    var evaluationData = htDataGrid.getSourceDataAtCol(columns);
+    
+    var dataToWork = [];
+
+    var component = ` <ul class="list-unstyled"> ` 
+    //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
+    evaluationData.forEach(element => {
+        if(element!=undefined){
+            dataToWork.push(parseFloat(element));
+        }
+    });
+    
+    console.log(dataToWork);
+    //Valido si selecciono numeros agrupados
+        if(agroupNumbers=="no"){
+            operations.forEach(element => {
+                switch(element){
+                    case "1":
+                    var temp=""; 
+                        if(jStat.median(dataToWork)+""=="NaN" || jStat.median(dataToWork)===NaN || jStat.median(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            temp+=jStat.median(dataToWork);
+                            console.log(operations +"Columnas "+columns+"DATOS "+dataToWork.length);
+                        }
+                    component += `<li>Mediana: ` +temp+` </li>`;
+                    break;
+                    case "2": 
+                    var temp=""; 
+                        if(jStat.mode(dataToWork)+""=="NaN" || jStat.mode(dataToWork)===NaN || jStat.mode(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            temp+=jStat.mode(dataToWork);
+                        }
+                    component += `<li>Moda: ` +temp+` </li>`;
+                    break;
+                    case "3": 
+                    var temp=""; 
+                        if( jStat.mean(dataToWork)+""=="NaN" || jStat.mean(dataToWork)===NaN || jStat.mean(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            temp+=jStat.mean(dataToWork)+"";
+                           
+                        }
+                    component += `<li>Media: ` +temp+` </li>`;
+                    break;
+                    default:
+                        component+="Algo esta jodido"+operations;
+                        break;
+                }
+            });
+        }else{
+            component+="Aca no ";
+        }
+
+    component +=`</ul>`;
+    //console.log(component);
+  return component;
   }
