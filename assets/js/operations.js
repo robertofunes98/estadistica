@@ -59,11 +59,6 @@ function changeVariableName()
 
         alert("la variable ha sido renombrada");
     }
-
-    
-
-
-
 }
 
 function countUnique(iterable) {
@@ -139,7 +134,7 @@ function generarTabla1()
 
         document.getElementById('response').innerHTML=result+result2;
     }
-    else 
+    else
     {
         var range = evaluationDataClean[evaluationDataClean.length-1] - evaluationDataClean[0];
     
@@ -151,7 +146,7 @@ function generarTabla1()
         var rawClassNumber = 1 + 3.322 * getBaseLog(10, evaluationDataClean.length);
         var rawClassWidth = range/classNumber;
 
-        var frequencyData = 
+        var frequencyData =
         [
             ['Clase', 'Frecuencia', 'Frecuencia relativa']
         ];
@@ -190,14 +185,14 @@ function generarTabla1()
         result2 += "<table class='table table-striped table-dark'>"
 
         for (let index = 0; index < frequencyData.length; index++) {
-            
-            result2 += 
+
+            result2 +=
             `<tr>
                 <td>`+frequencyData[index][0]+`</td>
                 <td>`+frequencyData[index][1]+`</td>
                 <td>`+frequencyData[index][2]+`</td>
             </tr>`;
-            
+
         }
 
         result2 +=
@@ -212,13 +207,80 @@ function generarTabla1()
         document.getElementById('response').innerHTML=result+result2;
     }
 }
-
-function getBaseLog(base, number) 
+function getBaseLog(base, number)
 {
     return Math.log(number) / Math.log(base);
 }
 
-function rsound(number)
-{
-    return Math.round(number * 100) / 100;
-}
+  function centralTendence(agroupNumbers,columns,operations){
+
+    var evaluationData = htDataGrid.getSourceDataAtCol(columns);
+
+    var dataToWork = [];
+    //Variable donde se almacenara las respuestas
+    var html = ` <ul class="list-unstyled"> `
+    //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
+    evaluationData.forEach(element => {
+        if(element!=undefined){
+            dataToWork.push(parseFloat(element));
+        }
+    });
+
+    console.log(dataToWork);
+    //Valido si selecciono numeros agrupados
+        if(agroupNumbers=="no"){
+            //Si no selecciono recorro el arreglo de operaciones que selecciono
+            operations.forEach(element => {
+                switch(element){
+                    //Caso Mediana
+                    case "1":
+                    var temp="";
+                        //Validaciones de errores
+                        if(jStat.median(dataToWork)+""=="NaN" || jStat.median(dataToWork)===NaN || jStat.median(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            //añado la respuesta a lo que se va mostrar
+                            temp+=jStat.median(dataToWork);
+                        }
+                    html += `<li>Mediana: ` +temp+` </li>`;
+                    break;
+                    //Caso Moda
+                    case "2":
+                    var temp="";
+                        //Validaciones de errores
+                        if(jStat.mode(dataToWork)+""=="NaN" || jStat.mode(dataToWork)===NaN || jStat.mode(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            //añado la respuesta a lo que se va mostrar
+                            temp+=jStat.mode(dataToWork);
+                        }
+                    html += `<li>Moda: ` +temp+` </li>`;
+                    break;
+                    //Caso media
+                    case "3":
+                    var temp="";
+                        //Validaciones de errores
+                        if( jStat.mean(dataToWork)+""=="NaN" || jStat.mean(dataToWork)===NaN || jStat.mean(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            temp+=jStat.mean(dataToWork)+"";
+                        }
+                        //añado la respuesta a lo que se va mostrar
+                    html += `<li>Media: ` +temp+` </li>`;
+                    break;
+                    default:
+                        html+="Algo esta jodido"+operations;
+                        break;
+                }
+            });
+        }else{
+            //Aca entraria si es de datos agrupados
+            html+="Aca no ";
+        }
+
+    html +=`</ul>`;
+  return html;
+  }
