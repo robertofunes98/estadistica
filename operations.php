@@ -1,6 +1,6 @@
 <?php
 include "components/navbar.html";
-include "components/stepper.html";
+//include "components/stepper.html";
 ?>
 
 <!--Custom include-->
@@ -12,30 +12,24 @@ include "components/stepper.html";
 
 <nav class="sidebar-navigation">
     <ul class="list-unstyled">
-  
-		<li class="active">
-           
+		<li  data-toggle="modal" data-target="#submitModal" onclick="tablaDeFrecuencias()">
             <i class="fas fa-table"></i>
-            <span class="tooltip" @click="toggleModal()">Tabla de frecuencias</span>
-     
+            <span class="tooltip">Tabla de frecuencias</span>
         </li>
-
-		<li>
-        <i class="fas fa-bezier-curve"></i>
+		<li data-toggle="modal" data-target="#submitModal" onclick="medidasTendenciaCentral()">
+        <i class="fas fa-bullseye"></i>
 			<span class="tooltip">Medidas de tendencia central</span>
 		</li>
-		<li>
-        <i class="fab fa-digital-ocean"></i>
+		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasDispersion()">
+        <i class="fas fa-arrows-alt"></i>
 			<span class="tooltip">Medidas de Dispercion</span>
 		</li>
-		<li>
-        <i class="fas fa-chart-bar"></i>
+		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasPosicion()">
+        <i class="fas fa-chart-bar" ></i>
 			<span class="tooltip">Medidas de posicion</span>
 		</li>
 	</ul>
 </nav>
-
-
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
@@ -43,12 +37,10 @@ include "components/stepper.html";
         </div>
         <input type="text" id="variableName" placeholder="Este es una nueva variable">
         <button onclick="changeVariableName()">cambiar nombre de variable</button>
-
         <br>
         <button onclick="generarTabla1()">
             generar tabla 1
         </button>
-
         <div id="response">
 
 
@@ -58,8 +50,10 @@ include "components/stepper.html";
 
 
 
+
 <?php
 include "components/footer.html";
+include "components/stepperBS.html";
 ?>
 <script>
 $('ul li').on('click', function() {
