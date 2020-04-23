@@ -21,6 +21,15 @@ include "components/navbar.html";
         <input type="text" id="variableName" placeholder="Este es una nueva variable">
         <button onclick="changeVariableName()">cambiar nombre de variable</button>
 
+        <br>
+        <button onclick="generarTabla1()">
+            generar tabla 1
+        </button>
+
+        <div id="response">
+
+
+        </div>
     </main>
 </div>
 
