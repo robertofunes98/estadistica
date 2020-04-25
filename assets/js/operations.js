@@ -1,6 +1,9 @@
 var htDataGrid;
 var headers;
 
+//varables para medidas de tendencia central
+let totalDataCount=0;
+
 $( document ).ready(function() {
     initGrid();
 });
@@ -8,7 +11,7 @@ $( document ).ready(function() {
 function initGrid()
 {
     headers = ['Variable 1', 'Variable 2', 'Variable 3', 'Variable 4', 'Variable 5', 'Variable 6', 'Variable 7'];
-    
+
 
     var data = new Array(20);
 
@@ -65,7 +68,7 @@ function countUnique(iterable) {
     return new Set(iterable);
 }
 
-function generateFrequencyTableForCualitative()
+function generateFrequencyTableForAgrupatedData()
 {
     var header = prompt("Que variable desea evaluar?");
 
@@ -73,13 +76,44 @@ function generateFrequencyTableForCualitative()
 
     var evaluationDataClean = evaluationData.filter(Boolean);
 
-    evaluationDataClean.sort(function(a, b){return a-b});
+    let isCualitativeData, cualitative, cuantitative;
+
+    cualitative=0;
+    cuantitative=0;
+
+    evaluationDataClean.forEach(element => {
+       if(isNaN(element))
+       {
+           if(typeof element === 'string')
+               cualitative++;
+           else
+           {
+               alert("Revise el tipo de datos, hay datos imposibles de evaluar");
+               return;
+           }
+       }
+       else
+           cuantitative++;
+    });
+
+    if(cualitative > 0 && cuantitative > 0)
+    {
+        alert("Revise el tipo de datos, hay datos cualitativos y cunatitativos en la misma variable");
+        return;
+    }
+    else
+        isCualitativeData = cualitative > 0;
+
+    if(isCualitativeData)
+        evaluationDataClean.sort();
+    else
+        evaluationDataClean.sort(function(a, b){return a-b});
 
     var countOfUniqueElements = countUnique(evaluationDataClean);
 
     let totalFrequency = 0, totalRelativeFrequency=0;
 
-    if(countOfUniqueElements.size <= 10)
+    if(countOfUniqueElements.size <= 10 || isCualitativeData)
     {
         var frequencyData =
         [
@@ -148,10 +182,16 @@ function generateFrequencyTableForCualitative()
 
         var frequencyData =
         [
-            ['Clase', 'Frecuencia', 'Frecuencia relativa']
+            ['Clase', 'Marca clase','Frecuencia absoluta', 'Frecuencia relativa', 'Frecuencia acumulada']
         ];
 
         var classvalue = parseInt(evaluationDataClean[0]);
+
+        let acumulatedfrequency = 0;
+
+        //vaiables para hallar la mediana
+        let average = evaluationDataClean.length/2;
+        let median=null;
 
         for(let i=0; i < classNumber; i++)
         {
@@ -166,19 +206,44 @@ function generateFrequencyTableForCualitative()
             }
 
             totalFrequency+=frequencyCounter;
+
             totalRelativeFrequency+=(frequencyCounter/evaluationDataClean.length);
 
             var classLimit = classvalue+classWidth;
 
-            frequencyData.push([classvalue + '-' + classLimit, frequencyCounter, frequencyCounter/evaluationDataClean.length]);
+            let previusAcumulatedfrequency = acumulatedfrequency;
+
+            acumulatedfrequency+=frequencyCounter;
+
+            //en este caos si da true es que ese es el intervalo mediano
+            if(acumulatedfrequency > average)
+            {
+                //calculando medidas de tendencia central
+                //mediana
+                if(true && median === null)
+                {
+                    median = medianForGroupedData([classvalue, classLimit], average, previusAcumulatedfrequency, frequencyCounter, classWidth);
+                }
+
+            }
+
+            frequencyData.push(
+                [
+                    classvalue + '-' + classLimit,
+                    (classvalue + classLimit)/2,
+                    frequencyCounter,
+                    frequencyCounter/evaluationDataClean.length,
+                    acumulatedfrequency
+                ]
+            );
 
             classvalue+=classWidth;
         }
 
-        var result = "La amplitud o rango es: "+range+
+        var result = "<p style='color: white;'>La amplitud o rango es: "+range+
         `<br>El numero de clases es: `+classNumber+
         `<br>El ancho de clase es: `+ classWidth+
-        `<br><br> rawClassNumber = `+rawClassNumber+` -   rawClassWidth = `+rawClassWidth+"<br><br>";
+        `<br><br> la mediana para datos grupados es `+median+"</p><br><br>";
 
         var result2="";
 
@@ -191,6 +256,8 @@ function generateFrequencyTableForCualitative()
                 <td>`+frequencyData[index][0]+`</td>
                 <td>`+frequencyData[index][1]+`</td>
                 <td>`+frequencyData[index][2]+`</td>
+                <td>`+ (index === 0 ? frequencyData[index][3] : roundToXDecimals(frequencyData[index][3], 2)) +`</td>
+                <td>`+frequencyData[index][4]+`</td>
             </tr>`;
 
         }
@@ -198,8 +265,10 @@ function generateFrequencyTableForCualitative()
         result2 +=
             `<tr>
                 <td>Total</td>
+                <td></td>
                 <td>`+totalFrequency+`</td>
-                <td>`+totalRelativeFrequency+`</td>
+                <td>`+roundToXDecimals(totalRelativeFrequency, 2)+`</td>
+                <td></td>
             </tr>`;
 
         result2 += "</table>"
@@ -209,9 +278,9 @@ function generateFrequencyTableForCualitative()
 }
 
 
-function generateFrequencyTableForCuantitative(variablesToEvaluate)
+function generateFrequencyTableForNonAgrupatedData(variablesToEvaluate)
 {
-    var evaluationDataClean = [];
+    let evaluationDataClean = [];
     var evaluationVariableNameClean = [];
 
     variablesToEvaluate.forEach(element => {
@@ -284,11 +353,27 @@ function generateFrequencyTableForCuantitative(variablesToEvaluate)
 
 }
 
+/**
+ * intervalN2 es un array de dos posiciones numericas [number, number]
+ * average es el promedio de los datos
+ * **/
+function medianForGroupedData(intervalN2, average, previusAcumulatedfrequency, absoluteFrequencyOfMeidanInterval, intervalAmplitude) {
+    return roundToXDecimals(intervalN2[0] + (((average - previusAcumulatedfrequency) / absoluteFrequencyOfMeidanInterval) * intervalAmplitude),2);
+}
 
 
 function getBaseLog(base, number)
 {
     return Math.log(number) / Math.log(base);
+}
+
+function roundToXDecimals(number, decimals)
+{
+    let aux = "1";
+    for(let i = 0; i < decimals; i++)
+        aux+="0";
+
+    return Math.round(number * parseInt(aux))/parseInt(aux);
 }
 
 function centralTendence(agroupNumbers,columns,operations){

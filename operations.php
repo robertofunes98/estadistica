@@ -38,10 +38,10 @@ include "components/navbar.html";
         <input type="text" id="variableName" placeholder="Este es una nueva variable">
         <button onclick="changeVariableName()">cambiar nombre de variable</button>
         <br>
-        <button onclick="generateFrequencyTableForCualitative()">
+        <button onclick="generateFrequencyTableForAgrupatedData()">
             generar tabla 1
         </button>
-        <button onclick="generateFrequencyTableForCuantitative([0,1,2,3,4,5,6])">
+        <button onclick="generateFrequencyTableForNonAgrupatedData([0,1,2,3,4,5,6])">
             generar tabla 2
         </button>
         <div id="response">
