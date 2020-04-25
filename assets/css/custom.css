@@ -3,9 +3,17 @@
 }
 
 
-
-
-
+.header-custom-black{
+  background: #343a40;
+  color: #ffffff;
+  padding: 0.75rem;
+}
+.header-custom-black th{
+  background: #343a40;
+  color: #ffffff;
+  padding: 0.75rem;
+  border: #343a40 solid 0px;
+}
 .inputGroup {
     background-color: #fff;
     display: block;

@@ -260,6 +260,9 @@
                     if($this.options.title=='<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>'){
                         valuesFromMTC();
                     }
+                    else if($this.options.title=='<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>'){
+                        valuesFromPOS();
+                    }
                 } else {
                     $this.next.text($this.options.nextText);
                 }

@@ -90,9 +90,8 @@
             $('input[name="operation[]"]:checked').each(function() {
             operation.push($(this).val());
             });
-
           $("#resultsMTC").html(centralTendence(groupNumbers,columns,operation));
-            //console.log("Agrupados "+groupNumbers+" Columnas "+columns+" Operaciones "+operation);
+
     }
     
     function tablaDeFrecuencias(){
@@ -151,28 +150,71 @@
     }
     function medidasPosicion(){
         $('.modal').MultiStep({
-            title:'<h3 class="display-6 text-center" style="width:90%!important">Tabla de frecuencias</h3>',
+            title:'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
         	data:[{
-        		content:'datos agrupados',
-                label:'Custom label'
+        		 content:`
+                <div>
+                    <p>Seleccione la columna</p>
+                    <div class="inputGroup">
+                        <input id="0" name="columnsPOS[]" type="radio" checked value="0"/>
+                        <label for="0">A</label>
+                    </div>
+                    <div class="inputGroup">
+                        <input id="1" name="columnsPOS[]" type="radio" value="1"/>
+                        <label for="1">B</label>
+                    </div>
+                    <div class="inputGroup">
+                    <input id="2" name="columnsPOS[]" type="radio" value="2" />
+                    <label for="2">C</label>
+                </div>
+                </div>`,
+                label:'Seleccionar columnas',
+                nextText:"Siguiente",
+                prevText:'Atras'
         	},{
-        		content:'This is a multi-step modal'
-        	},{
-                content:`You can have skip options`,
-                skip:true
-            },{
-        		content:`<small>You can include html content as well!</small><br><br>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                  </div>
-                `,
-        		skip:true
-        	},{
-        		content:`This is the end<br>Hold your breath and count to ten`,
-        	}],
-            final:'You can have your own final message',
-            modalSize:'lg'
+                content:`
+                <form id="operationsMTC">
+                <div class="inputGroup">
+                    <input id="operation1" name="operationPOS[]" type="checkbox" value="1" />
+                    <label for="operation1">Decil</label>
+                </div>
+             
+
+                <div class="inputGroup">
+                    <input id="operation2" name="operationPOS[]" type="checkbox" value="2""/>
+                    <label for="operation2">Percentil</label>
+                </div>
+               
+                
+                <div class="inputGroup">
+                    <input id="operation3" name="operationPOS[]" type="checkbox" value="3"/>
+                    <label for="operation3">Cuartil</label>
+                </div>
+                <div class="inputGroup">
+                    <input id="operation4" name="operationPOS[]" type="checkbox" value="4"/>
+                    <label for="operation4">Quintil</label>
+                </div>
+               
+                </form>`,
+                label:'Personalizar resultados',
+                nextText:"Calcular!",
+                prevText:'Atras'
+            }],
+           final:`<h3 class="display-6 text-center" style="width:100%!important">Resultados</h3>
+            <div id="resultsPOS"></div>`,
+            modalSize:'lg',
+            finalLabel:'Resultados',
+            prevText:'Atras',
+            finishText:'Cerrar'
         });
     }
+    function valuesFromPOS(){
+        operation = [];
+        //groupNumbers= $("input[name='groupNumbers[]']:checked").val();
+        columns= $("input[name='columnsPOS[]']:checked").val();
+        $('input[name="operationPOS[]"]:checked').each(function() {
+        operation.push($(this).val());
+        });
+      $("#resultsPOS").html(positionMeasure(columns,operation));
+
+}
