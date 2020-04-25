@@ -229,7 +229,7 @@ function generateFrequencyTableForAgrupatedData()
 
             frequencyData.push(
                 [
-                    classvalue + '-' + classLimit,
+                    [classvalue, classLimit],
                     (classvalue + classLimit)/2,
                     frequencyCounter,
                     frequencyCounter/evaluationDataClean.length,
@@ -240,10 +240,15 @@ function generateFrequencyTableForAgrupatedData()
             classvalue+=classWidth;
         }
 
+        let mode = modeForGroupedData(frequencyData);
+
+        let resultAverageForGroupeddata = averageForGroupedData(frequencyData, evaluationDataClean.length);
+
         var result = "<p style='color: white;'>La amplitud o rango es: "+range+
         `<br>El numero de clases es: `+classNumber+
         `<br>El ancho de clase es: `+ classWidth+
-        `<br><br> la mediana para datos grupados es `+median+"</p><br><br>";
+        `<br><br> la mediana para datos grupados es `+median
+            +"<br>La moda para datos agrupados es "+mode+"<br>La media para datos agrupados es "+resultAverageForGroupeddata+"</p><br><br>";
 
         var result2="";
 
@@ -253,7 +258,7 @@ function generateFrequencyTableForAgrupatedData()
 
             result2 +=
             `<tr>
-                <td>`+frequencyData[index][0]+`</td>
+                <td>`+(index === 0 ? frequencyData[index][0] : frequencyData[index][0][0]+'-'+frequencyData[index][0][1] )+`</td>
                 <td>`+frequencyData[index][1]+`</td>
                 <td>`+frequencyData[index][2]+`</td>
                 <td>`+ (index === 0 ? frequencyData[index][3] : roundToXDecimals(frequencyData[index][3], 2)) +`</td>
@@ -361,6 +366,46 @@ function medianForGroupedData(intervalN2, average, previusAcumulatedfrequency, a
     return roundToXDecimals(intervalN2[0] + (((average - previusAcumulatedfrequency) / absoluteFrequencyOfMeidanInterval) * intervalAmplitude),2);
 }
 
+function modeForGroupedData(data) {
+
+    let modalInterval=0;
+
+    let higherValue=0;
+
+    for(let i=1; i < data.length; i++)
+    {
+        if(data[i][2] > higherValue)
+        {
+            modalInterval=i;
+            higherValue=data[i][2];
+        }
+    }
+
+    let mode = data[modalInterval][0][0] + (
+        (
+            (data[modalInterval][2] - data[modalInterval-1][2]) /
+            ((data[modalInterval][2] - data[modalInterval-1][2]) + (data[modalInterval][2] - data[modalInterval+1][2]))
+        ) * (data[modalInterval][0][1]-data[modalInterval][0][0])
+    );
+
+
+    return roundToXDecimals(mode,2);
+}
+
+function averageForGroupedData(data, N) {
+
+    let sum=0;
+
+    for(let i=1; i < data.length; i++)
+    {
+        sum+= parseFloat(parseFloat(data[i][1]) * parseFloat(data[i][2]));
+    }
+
+    let average = sum/N;
+
+
+    return roundToXDecimals(average,2);
+}
 
 function getBaseLog(base, number)
 {
@@ -695,9 +740,6 @@ function positionMeasure(columns,operations){
     html +=`</ul>`;
     return html;
 }
-
-
-
 
 function roundNumber(num, scale) {
     if(!("" + num).includes("e")) {
