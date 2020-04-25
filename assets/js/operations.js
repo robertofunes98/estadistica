@@ -514,7 +514,7 @@ function positionMeasure(columns,operations){
                     //Caso Decil
                     case "1":
                         var decilValue= new Array();
-                        var temp="<table class='table'> <thead class='thead-dark'><tr><th>Percentil</th>";
+                        var temp="<table class='table'> <thead class='thead-dark'><tr><th>Decil</th>";
                         //Ordena el arreglo
                         dataToWork.sort(function(a,b){return a - b;});
                         var len =  dataToWork.length;
@@ -545,28 +545,23 @@ function positionMeasure(columns,operations){
                             temp+="<td>"+per+"</td>";
 
                             decilValue.push(per);
-                            console.log(decilValue[a]-decilValue[a-1]);
-                            if((decilValue[a]==decilValue[a-1]) || a==0){
-                                temp2+="<td>0</td>";
-                            }else{
-                               temp2+="<td>"+(decilValue[a]-decilValue[a-1])+"</td>";
-                            }
+                            
+                            
                            a++;
                         } 
-
-                        temp+="</tr><tr><th>IQR</th>"+temp2+"</tr></table>";
-
+                        temp2 = decilValue[a-2]-decilValue[0];
+                        temp+="<tr></table>";
                         //Validaciones de errores
                         if(per+""=="NaN" || per===NaN || per===undefined){
                             temp="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
                         }
-                    
-                        html += `<li>Deciles` +temp+` </li>`;
+                        html += `<li><h3 class="display-5">Deciles</h3></li><hr><br><h3 class="display-7"> El rango inter decil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
+                        
                     break;
 
                     //Caso Percentil
                     case "2":
-                    var temp="<div style='display: inline-block;'><table class='table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black' ><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                    var temp="<div style='display: inline-block;'><table class='table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black' ><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                     //Ordena el arreglo
                     dataToWork.sort(function(a,b){return a - b;});
                     var len =  dataToWork.length;
@@ -575,23 +570,23 @@ function positionMeasure(columns,operations){
                         for(i=0.01;i<=1;i+=0.01){
                             //Generacion de las tablas
                            if(i.toFixed(2)==0.11)
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.21)
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.31)
-                                    temp+="</table></div><br><div style='display: inline-block;'> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table></div><br><div style='display: inline-block;'> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.41) 
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.51)
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.61)
-                                    temp+="</table> </div><br><div style='display: inline-block;'><table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> </div><br><div style='display: inline-block;'><table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.71)
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.81)
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             if(i.toFixed(2)==0.91)
-                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                                    temp+="</table> <table class=' table-hover table-bordered' style='display: inline-block;'><thead class='thead-dark header-custom-black''><tr><th>Percentil</th><th>Valor</th></tr></thead>";
                             
                             //Si llega ala ultima posicion del iterador, que agarre el ultimo valor del arreglo
                             if(i.toFixed(1)==1){
@@ -612,30 +607,20 @@ function positionMeasure(columns,operations){
                             values.push(per);
                             //Obtengo el iterador anterior para consultar si la posicion es diferente y asi asignar un 0
                             var pos= ((i*100)-1).toFixed();
-                           // console.log(pos);
-                            if(values[pos]== values[pos-1] || pos==0){
-                                    pos = 0;
-                            }
-                            else{
-                                pos=values[pos]-values[pos-1];
-                            }
+                           
                             //Aca se genera cala linea, dentro de las tablas                           
-                            temp+="<tr><td>"+ (roundNumber(i,2)*100).toFixed()+"</td><td>"+per+"</td><td>"+pos+"</td></tr>";
+                            temp+="<tr><td>"+ (roundNumber(i,2)*100).toFixed()+"</td><td>"+per+"</td></tr>";
                         }
-                        if(values[pos]== values[pos-1] || pos==0 ){
-                                pos = 0;
-                        }
-                        else{
-                            pos=values[pos]-values[pos-1];
-                        } 
-                        temp+="<tr><td>"+ (roundNumber(i,2)*100).toFixed()+"</td><td>"+per+"</td><td>"+pos+"</td></tr>";
+                            pos=values[pos-2]-values[0];
+                        
+                        temp+="<tr><td>"+ (roundNumber(i,2)*100).toFixed()+"</td><td>"+per+"</td></tr></table></div>";
 
                         //Validaciones de errores
                         if(per+""=="NaN" || per===NaN || per===undefined || per+""=="undefined"){
                             temp="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
                         }
                         
-                    html += `<li>Percentil</li><br>` +temp+` `;
+                    html += `<li><h3 class="display-5">Percentiles</h3></li><hr><br><h3 class="display-7"> El rango inter percentil es ≈ <strong>`+pos +`</strong></h3><br>`+temp+` `;
                     break;
                     //Caso Cuartil
                     case "3":
@@ -651,7 +636,7 @@ function positionMeasure(columns,operations){
                         var iqr = new Array();
                         iqr = temp.split(",");
                         console.log(iqr);
-                        temp="<table class='table '><thead class='thead-dark'><tr><th>Cuartil</th><th>Valor</th><th>IQR</th></tr></thead>";
+                        temp="<table class='table '><thead class='thead-dark'><tr><th>Cuartil</th><th>Valor</th></tr></thead>";
                         for(i=0;i<iqr.length;i++){
                             var temp2 =0;
                             if(i==0 || iqr[i] == iqr[i-1] ){
@@ -659,12 +644,13 @@ function positionMeasure(columns,operations){
                             }else{
                                 temp2=iqr[i]-iqr[i-1];
                             }
-                            temp+="<tr><td>"+i+" ("+quartilesValues[i]+") </td><td>"+iqr[i]+"</td><td>"+temp2+"</td></tr>";
+                            temp+="<tr><td>"+(i+1)+" ("+quartilesValues[i]+") </td><td>"+iqr[i]+"</td></tr>";
                         }
+                        temp2=iqr[i-1]-iqr[0];
                         temp+="</table>";
                         //añado la respuesta a lo que se va mostrar
-                    html += `<li>Cuartiles:  </li>
-                    `+temp;
+                        html += `<li><h3 class="display-5">Cuartiles</h3></li><hr><br><h3 class="display-7"> El rango inter cuartil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
+                
                     break;
                     //Caso Quintil
                     case "4":
@@ -708,15 +694,15 @@ function positionMeasure(columns,operations){
                             temp+="<td>"+per+"</td>";
                             a++;
                         } 
-
-                        temp+="</tr><tr><th>IQR</th>"+temp2+"</tr></table>";
+                        temp2= quintilValue[a-2]-quintilValue[0];
+                        temp+="</tr></table>";
 
                         //Validaciones de errores
                         if(per+""=="NaN" || per===NaN || per===undefined){
                             temp="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
                         }
-                    
-                        html += `<li>Quintil </li>`+temp;
+                        html += `<li><h3 class="display-5">Quintiles</h3></li><hr><br><h3 class="display-7"> El rango inter quintil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
+                        
                         break;
                         //Caso rango intercuartil
                         case "5":
