@@ -6,6 +6,7 @@ let totalDataCount=0;
 
 $( document ).ready(function() {
     initGrid();
+    
 });
 
 function initGrid()
@@ -750,22 +751,7 @@ function dispersionMeasure(groupNumbers,columns,operation){
             //Si no selecciono recorro el arreglo de operaciones que selecciono
             operation.forEach(element => {
                 switch(element){
-                    //Caso Desviacion tipica
-                    case "1":
-                    var temp="<table class='table'><thead class='thead-dark'><tr><th>Valor</th><th>Desviación</th><tr></thead>";
-                        //Validaciones de errores
-                        if(jStat.deviation(dataToWork)+""=="NaN" || jStat.deviation(dataToWork)===NaN || jStat.deviation(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
-                        }
-                        else{
-                           var desviations = jStat.deviation(dataToWork);
-                            for (let index = 0; index < dataToWork.length; index++) {
-                                temp+="<tr><td>"+dataToWork[index]+"</td><td>"+desviations[index].toFixed(2)+"</td></tr>";
-                            }
-                        }
-                    html += `<li><h3 class="display-5">Desviación típica</h3></li><hr><br><h3 class="display-7"></h3>`+temp+` </table><br>`;
                     
-                    break;
                     //Caso Desviacion standard
                     case "2":
                     var temp="";
@@ -801,7 +787,71 @@ function dispersionMeasure(groupNumbers,columns,operation){
             });
         }else{
             //Aca entraria si es de datos agrupados
-            html+="Aca irian las respuestas de datos agrupados ";
+            var evaluationData1 = htDataGrid.getSourceDataAtCol(columns[0]);
+            var evaluationData2 = htDataGrid.getSourceDataAtCol(columns[1]);
+           
+
+          
+
+            var dataToWork1 = [];
+            var dataToWork2 = [];
+            //Variable donde se almacenara las respuestas
+            var html = ` <ul class="list-unstyled"> `
+            //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
+            evaluationData1.forEach(element => {
+                if(element!=undefined){
+                    dataToWork1.push(parseFloat(element));
+                }
+            });
+            evaluationData2.forEach(element => {
+                if(element!=undefined){
+                    dataToWork2.push(parseFloat(element));
+                }
+            });
+
+
+
+
+            
+            //Si no selecciono recorro el arreglo de operaciones que selecciono
+            operation.forEach(element => {
+                switch(element){
+                  
+                    //Caso Desviacion standard
+                    case "2":
+                    var temp="";
+                        //Validaciones de errores
+                        if(jStat.pooledstdev([dataToWork1,dataToWork2])+""=="NaN" || jStat.pooledstdev([dataToWork1,dataToWork2])===NaN || jStat.pooledstdev([dataToWork1,dataToWork2])===undefined){
+                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
+                        }
+                        else{
+                            //añado la respuesta a lo que se va mostrar
+                            temp+=jStat.pooledstdev([dataToWork1,dataToWork2]).toFixed(2);
+                            temp+='<h3 class="display-7"> La desviación estándar de los datos proporcionados ≈ <strong>'+temp +'</strong></h3>';
+                        }
+                        //añado la respuesta a lo que se va mostrar
+                    html += `<li><h3 class="display-5">Desviación Estándar Agrupada</h3></li><hr><br>`+temp;
+                    break;
+                    //Caso Varianza
+                    case "3":
+                    var temp="";
+                        //Validaciones de errores
+                        if( jStat.pooledvariance([dataToWork1,dataToWork2])+""=="NaN" || jStat.pooledvariance([dataToWork1,dataToWork2])===NaN || jStat.pooledvariance([dataToWork1,dataToWork2])===undefined){
+                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
+                        }
+                        else{
+                            temp+=jStat.pooledvariance([dataToWork1,dataToWork2]).toFixed(2)+"";
+                            temp+='<h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>'+temp +'</strong></h3>';
+                        }
+                        //añado la respuesta a lo que se va mostrar
+                    html += `<li><h3 class="display-5">Varianza Agrupada</h3></li><hr><br>`+temp;
+                    
+                    break;
+                    default:
+                        html+="Algo esta jodido"+operations;
+                        break;
+                }
+            });
         }
        
         html +=`</ul>`;

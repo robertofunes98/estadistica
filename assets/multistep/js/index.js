@@ -110,6 +110,7 @@
         });
     }
     function medidasDispersion(){
+       
         $('.modal').MultiStep({
             title:'<h3 class="display-6 text-center" style="width:90%!important">Medidas de dispersión</h3>',
         	data:[
@@ -140,21 +141,17 @@
                     prevText:'Atras'
                 },{
                     content:`
-                    <form id="operationsMTC">
-                    <div class="inputGroup">
-                        <input id="operation1" name="operation[]" type="checkbox" value="1"/>
-                        <label for="operation1">Desviacion tipica</label>
-                    </div>
-                    <div class="inputGroup">
-                        <input id="operation2" name="operation[]" type="checkbox" value="2"/>
-                        <label for="operation2">Desviacion estándar</label>
-                    </div>
-                  
-                    <div class="inputGroup">
-                        <input id="operation3" name="operation[]" type="checkbox" value="3"/>
-                        <label for="operation3">Varianza</label>
-                    </div>
-                    </form>`,
+                    <div id="operationsDISP">
+                        
+                        <div class="inputGroup">
+                            <input id="operation2" name="operation[]" type="checkbox" value="2"/>
+                            <label for="operation2">Desviacion estándar</label>
+                        </div>
+                        <div class="inputGroup">
+                            <input id="operation3" name="operation[]" type="checkbox" value="3"/>
+                            <label for="operation3">Varianza</label>
+                        </div>
+                    </div>`,
                     label:'Personalizar resultados',
                     nextText:"Calcular!",
                     prevText:'Atras'
@@ -170,8 +167,11 @@
 
     function valuesFromMDISP(){
         operation = [];
+        columns =[];
         groupNumbers= $("input[name='groupNumbers[]']:checked").val();
-        columns= $("input[name='columns[]']:checked").val();
+        $("input[name='columns[]']:checked").each(function() {
+            columns.push($(this).val());
+            });
         $('input[name="operation[]"]:checked').each(function() {
         operation.push($(this).val());
         });
@@ -256,15 +256,15 @@
             columns=`
         <p>Seleccione las columnas</p>
         <div class="inputGroup">
-            <input id="0" name="columns[]" type="checkbox" value="1" />
+            <input id="0" name="columns[]" type="checkbox" value="0" onclick="contaCheckbox(this)" />
             <label for="0">A</label>
         </div>
         <div class="inputGroup">
-            <input id="1" name="columns[]" type="checkbox" value="2""/>
+            <input id="1" name="columns[]" type="checkbox" value="1" onclick="contaCheckbox(this)"/>
             <label for="1">B</label>
         </div>
         <div class="inputGroup">
-            <input id="2" name="columns[]" type="checkbox" value="3"/>
+            <input id="2" name="columns[]" type="checkbox" value="2" onclick="contaCheckbox(this)"/>
             <label for="2">C</label>
         </div>
        `;
@@ -283,7 +283,26 @@
                 <input id="2" name="columns[]" type="radio" value="2" />
                 <label for="2">C</label>
             </div>`;
-        } 
+            
+            } 
         $("#selectColumns").html(columns);
+        
+      //  $("#operationsDISP").html(opertions);
+    }
+
+    //Validador de checkboxes
+    function contaCheckbox(checkItem){
+        var checkboxes = $("input[name='columns[]']:checked");
+        var cont = 0; 
+            for (var x=0; x < checkboxes.length; x++) {
+                if (checkboxes[x].checked) {
+                cont = cont + 1;
+                }
+            }
+            if(cont>2 && checkItem!=null){
+                checkItem.checked = false;
+                alert("Solo puede seleccionar 2 columnas");
+            }
+            return cont;
     }
 
