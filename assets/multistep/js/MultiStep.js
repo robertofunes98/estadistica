@@ -247,21 +247,47 @@
         _attachNextEvent: function() {
             var $this = this;
             $this.next.click(function() {
+                var  arrayMedidas = {
+                    "TFREQ":'<h3 class="display-6 text-center" style="width:90%!important">Tabla de frequencia</h3>',
+                    "MTC":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>',
+                    "MPOS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
+                    "MDIS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de dispersión</h3>',
+                }
                 var nextIdx = $this.currentStepIdx;
+                //alert(nextIdx);
+                var res = $("input[name='groupNumbers[]']:checked").val();
+                if(nextIdx==1 && res=="si"){
+                    switch ($this.options.title) {
+                        case arrayMedidas["TFREQ"]:
+                            columnsVerify(true);
+                            break;
+                        case arrayMedidas["MTC"]:
+                            columnsVerify(true);
+                            break;
+                        case arrayMedidas["MDIS"]:
+                            columnsVerify(true);
+                            break;
+                        default:
+                            columnsVerify(false);
+                            break;
+                    }
+                }else if(nextIdx==1 && res=="no"){
+                    columnsVerify(false);
+                }
                 if (nextIdx >= $this.stepsCount + 1) {
                     $this.element.modal('hide');
-                  
                     return;
                 }
                 if (nextIdx >= $this.stepsCount) {
                     $this.next.text($this.options.finishText);
                     $this.next.addClass("finish_modal")
                     // console.log($this.options.title);
-                    if($this.options.title=='<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>'){
+                    if($this.options.title==arrayMedidas["MTC"]){
                         valuesFromMTC();
-                    }
-                    else if($this.options.title=='<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>'){
+                    }else if($this.options.title==arrayMedidas["MPOS"]){
                         valuesFromPOS();
+                    }else if($this.options.title==arrayMedidas["MDIS"]){
+                        valuesFromMDISP();
                     }
                 } else {
                     $this.next.text($this.options.nextText);

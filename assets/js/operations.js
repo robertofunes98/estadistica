@@ -486,7 +486,7 @@ function centralTendence(agroupNumbers,columns,operations){
             });
         }else{
             //Aca entraria si es de datos agrupados
-            html+="Aca no ";
+            html+="Aca irian las respuestas de datos agrupados ";
         }
 
     html +=`</ul>`;
@@ -727,6 +727,88 @@ function positionMeasure(columns,operations){
     return html;
 }
 
+function dispersionMeasure(groupNumbers,columns,operation){
+    console.log(groupNumbers);
+    //Valido si selecciono numeros agrupados
+        if(groupNumbers=="no"){
+
+            var evaluationData = htDataGrid.getSourceDataAtCol(columns);
+
+            var dataToWork = [];
+            //Variable donde se almacenara las respuestas
+            var html = ` <ul class="list-unstyled"> `
+            //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
+            evaluationData.forEach(element => {
+                if(element!=undefined){
+                    dataToWork.push(parseFloat(element));
+                }
+            });
+
+            console.log(dataToWork);
+
+
+            //Si no selecciono recorro el arreglo de operaciones que selecciono
+            operation.forEach(element => {
+                switch(element){
+                    //Caso Desviacion tipica
+                    case "1":
+                    var temp="<table class='table'><thead class='thead-dark'><tr><th>Valor</th><th>Desviación</th><tr></thead>";
+                        //Validaciones de errores
+                        if(jStat.deviation(dataToWork)+""=="NaN" || jStat.deviation(dataToWork)===NaN || jStat.deviation(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                           var desviations = jStat.deviation(dataToWork);
+                            for (let index = 0; index < dataToWork.length; index++) {
+                                temp+="<tr><td>"+dataToWork[index]+"</td><td>"+desviations[index].toFixed(2)+"</td></tr>";
+                            }
+                        }
+                    html += `<li><h3 class="display-5">Desviación típica</h3></li><hr><br><h3 class="display-7"></h3>`+temp+` </table><br>`;
+                    
+                    break;
+                    //Caso Desviacion standard
+                    case "2":
+                    var temp="";
+                        //Validaciones de errores
+                        if(jStat.stdev(dataToWork)+""=="NaN" || jStat.stdev(dataToWork)===NaN || jStat.stdev(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            //añado la respuesta a lo que se va mostrar
+                            temp+=jStat.stdev(dataToWork).toFixed(2);
+                        }
+                  html += `<li><h3 class="display-5">Desviación Estándar</h3></li><hr><br><h3 class="display-7"> La desviación estándar de los datos proporcionados ≈ <strong>`+temp +`</strong></h3><br>`;
+                  
+                    break;
+                    //Caso Varianza
+                    case "3":
+                    var temp="";
+                        //Validaciones de errores
+                        if( jStat.variance(dataToWork)+""=="NaN" || jStat.variance(dataToWork)===NaN || jStat.variance(dataToWork)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            temp+=jStat.variance(dataToWork).toFixed(2)+"";
+                        }
+                        //añado la respuesta a lo que se va mostrar
+                    html += `<li><h3 class="display-5">Varianza</h3></li><hr><br><h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>`+temp +`</strong></h3>`;
+                    
+                    break;
+                    default:
+                        html+="Algo esta jodido"+operations;
+                        break;
+                }
+            });
+        }else{
+            //Aca entraria si es de datos agrupados
+            html+="Aca irian las respuestas de datos agrupados ";
+        }
+       
+        html +=`</ul>`;
+        return html;
+        
+}
+
 function roundNumber(num, scale) {
     if(!("" + num).includes("e")) {
       return +(Math.round(num + "e+" + scale)  + "e-" + scale);
@@ -739,3 +821,4 @@ function roundNumber(num, scale) {
       return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
     }
   }
+

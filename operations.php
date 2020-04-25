@@ -62,4 +62,6 @@ include "components/stepperBS.html";
 $('ul li').on('click', function() {
 	$('li').removeClass('active');
 	$(this).addClass('active');
-});</script>
+});
+
+</script>
