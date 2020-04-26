@@ -493,7 +493,7 @@ function centralTendence(agroupNumbers,columns,operations){
             var html = ` <ul class="list-unstyled"> `
             //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
             evaluationData.forEach(element => {
-                if(element!=undefined){
+                if(element!=undefined && element!=NaN){
                     dataToWork.push(parseFloat(element));
                 }
             });
@@ -507,42 +507,42 @@ function centralTendence(agroupNumbers,columns,operations){
                     var temp="";
                         //Validaciones de errores
                         if(jStat.median(dataToWork)+""=="NaN" || jStat.median(dataToWork)===NaN || jStat.median(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.median(dataToWork);
                         }
-                    html += `<li>Mediana: ` +temp+` </li>`;
+                    html += `<li><h3 class='display-7'>Mediana:</h3> ` +temp+` </li>`;
                     break;
                     //Caso Moda
                     case "2":
                     var temp="";
                         //Validaciones de errores
                         if(jStat.mode(dataToWork)+""=="NaN" || jStat.mode(dataToWork)===NaN || jStat.mode(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.mode(dataToWork);
                         }
-                    html += `<li>Moda: ` +temp+` </li>`;
+                    html += `<li><h3 class='display-7'>Moda:</h3>  ` +temp+` </li>`;
                     break;
                     //Caso media
                     case "3":
                     var temp="";
                         //Validaciones de errores
                         if( jStat.mean(dataToWork)+""=="NaN" || jStat.mean(dataToWork)===NaN || jStat.mean(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             temp+=jStat.mean(dataToWork)+"";
                         }
                         //añado la respuesta a lo que se va mostrar
-                    html += `<li>Media: ` +temp+` </li>`;
+                    html += `<li><h3 class='display-7'>Media:</h3> ` +temp+` </li>`;
                     break;
                     default:
-                        html+="Algo esta jodido"+operations;
+                        html+="Algo salió mal "+operations;
                         break;
                 }
             });
@@ -579,42 +579,42 @@ function centralTendence(agroupNumbers,columns,operations){
                     var temp="";
                         //Validaciones de errores
                         if(jStat.median(dataToWork1,dataToWork2)+""=="NaN" || jStat.median(dataToWork1,dataToWork2)===NaN || jStat.median(dataToWork1,dataToWork2)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.median(dataToWork1,dataToWork2).toFixed(2);
                         }
-                    html += `<li>Mediana: ` +temp+` </li>`;
+                    html += `<li><h3 class='display-7'>Mediana:</h3> ` +temp+` </li>`;
                     break;
                     //Caso Moda
                     case "2":
                     var temp="";
                         //Validaciones de errores
                         if(jStat.mode(dataToWork1,dataToWork2)+""=="NaN" || jStat.mode(dataToWork1,dataToWork2)===NaN || jStat.mode(dataToWork1,dataToWork2)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.mode(dataToWork1,dataToWork2).toFixed(2);
                         }
-                    html += `<li>Moda: ` +temp+` </li>`;
+                    html += `<li><h3 class='display-7'>Moda:</h3> ` +temp+` </li>`;
                     break;
                     //Caso media
                     case "3":
                     var temp="";
                         //Validaciones de errores
                         if( jStat.mean(dataToWork1,dataToWork2)+""=="NaN" || jStat.mean(dataToWork1,dataToWork2)===NaN || jStat.mean(dataToWork1,dataToWork2)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             temp+=jStat.mean(dataToWork1,dataToWork2).toFixed(2)+"";
                         }
                         //añado la respuesta a lo que se va mostrar
-                    html += `<li>Media: ` +temp+` </li>`;
+                    html += `<li><h3 class='display-7'>Media:</h3> ` +temp+` </li>`;
                     break;
                     default:
-                        html+="Algo esta jodido"+operations;
+                        html+="Algo salió mal "+operations;
                         break;
                }
            });
@@ -684,9 +684,9 @@ function positionMeasure(columns,operations){
                         temp+="<tr></table>";
                         //Validaciones de errores
                         if(per+""=="NaN" || per===NaN || per===undefined){
-                            temp="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
-                        html += `<li><h3 class="display-5">Deciles</h3></li><hr><br><h3 class="display-7"> El rango inter decil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
+                        html += `<li><h3 class="display-6">Deciles</h3></li><hr><br><h3 class="display-7"> El rango inter decil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
                         
                     break;
 
@@ -748,10 +748,10 @@ function positionMeasure(columns,operations){
 
                         //Validaciones de errores
                         if(per+""=="NaN" || per===NaN || per===undefined || per+""=="undefined"){
-                            temp="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         
-                    html += `<li><h3 class="display-5">Percentiles</h3></li><hr><br><h3 class="display-7"> El rango inter percentil es ≈ <strong>`+pos +`</strong></h3><br>`+temp+` `;
+                    html += `<li><h3 class="display-6">Percentiles</h3></li><hr><br><h3 class="display-7"> El rango inter percentil es ≈ <strong>`+pos +`</strong></h3><br>`+temp+` `;
                     break;
                     //Caso Cuartil
                     case "3":
@@ -759,7 +759,7 @@ function positionMeasure(columns,operations){
                     var quartilesValues = ["25%","50%","75%"];
                         //Validaciones de errores
                         if( jStat.quartiles(dataToWork)+""=="NaN" || jStat.quartiles(dataToWork)===NaN || jStat.quartiles(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             temp+=jStat.quartiles(dataToWork)+"";
@@ -780,7 +780,7 @@ function positionMeasure(columns,operations){
                         temp2=iqr[i-1]-iqr[0];
                         temp+="</table>";
                         //añado la respuesta a lo que se va mostrar
-                        html += `<li><h3 class="display-5">Cuartiles</h3></li><hr><br><h3 class="display-7"> El rango inter cuartil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
+                        html += `<li><h3 class="display-6">Cuartiles</h3></li><hr><br><h3 class="display-7"> El rango inter cuartil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
                 
                     break;
                     //Caso Quintil
@@ -830,9 +830,9 @@ function positionMeasure(columns,operations){
 
                         //Validaciones de errores
                         if(per+""=="NaN" || per===NaN || per===undefined){
-                            temp="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
-                        html += `<li><h3 class="display-5">Quintiles</h3></li><hr><br><h3 class="display-7"> El rango inter quintil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
+                        html += `<li><h3 class="display-6">Quintiles</h3></li><hr><br><h3 class="display-7"> El rango inter quintil es ≈ <strong>`+temp2 +`</strong></h3><br>`+temp+` `;
                         
                         break;
                         //Caso rango intercuartil
@@ -840,7 +840,7 @@ function positionMeasure(columns,operations){
                             var temp="";
                                 //Validaciones de errores
                                 if( jStat.mean(dataToWork)+""=="NaN" || jStat.mean(dataToWork)===NaN || jStat.mean(dataToWork)===undefined){
-                                    temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                                   temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                                 }
                                 else{
                                     temp+=jStat.mean(dataToWork)+"";
@@ -849,7 +849,7 @@ function positionMeasure(columns,operations){
                             html += `<li>Intercuartil - no funciona aun: ` +temp+` </li>`;
                             break;
                     default:
-                        html+="Algo esta jodido"+operations;
+                        html+="Algo salió mal "+operations;
                         break;
                 }
             });
@@ -887,13 +887,13 @@ function dispersionMeasure(groupNumbers,columns,operation){
                     var temp="";
                         //Validaciones de errores
                         if(jStat.stdev(dataToWork)+""=="NaN" || jStat.stdev(dataToWork)===NaN || jStat.stdev(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.stdev(dataToWork).toFixed(2);
                         }
-                  html += `<li><h3 class="display-5">Desviación Estándar</h3></li><hr><br><h3 class="display-7"> La desviación estándar de los datos proporcionados ≈ <strong>`+temp +`</strong></h3><br>`;
+                  html += `<li><h3 class="display-6">Desviación Estándar</h3></li><hr><br><h3 class="display-7"> La desviación estándar de los datos proporcionados ≈ <strong>`+temp +`</strong></h3><br>`;
                   
                     break;
                     //Caso Varianza
@@ -901,17 +901,17 @@ function dispersionMeasure(groupNumbers,columns,operation){
                     var temp="";
                         //Validaciones de errores
                         if( jStat.variance(dataToWork)+""=="NaN" || jStat.variance(dataToWork)===NaN || jStat.variance(dataToWork)===undefined){
-                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                           temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             temp+=jStat.variance(dataToWork).toFixed(2)+"";
                         }
                         //añado la respuesta a lo que se va mostrar
-                    html += `<li><h3 class="display-5">Varianza</h3></li><hr><br><h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>`+temp +`</strong></h3>`;
+                    html += `<li><h3 class="display-6">Varianza</h3></li><hr><br><h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>`+temp +`</strong></h3>`;
                     
                     break;
                     default:
-                        html+="Algo esta jodido"+operations;
+                        html+="Algo salió mal "+operations;
                         break;
                 }
             });
@@ -956,29 +956,29 @@ function dispersionMeasure(groupNumbers,columns,operation){
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
-                            temp+=jStat.pooledstdev([dataToWork1,dataToWork2]).toFixed(2);
+                            temp=jStat.pooledstdev([dataToWork1,dataToWork2]).toFixed(2);
                             temp+='<h3 class="display-7"> La desviación estándar de los datos proporcionados ≈ <strong>'+temp +'</strong></h3>';
                         }
                         //añado la respuesta a lo que se va mostrar
-                    html += `<li><h3 class="display-5">Desviación Estándar Agrupada</h3></li><hr><br>`+temp;
+                    html += `<li><h3 class="display-6">Desviación Estándar Agrupada</h3></li><hr><br>`+temp;
                     break;
                     //Caso Varianza
                     case "3":
                     var temp="";
                         //Validaciones de errores
                         if( jStat.pooledvariance([dataToWork1,dataToWork2])+""=="NaN" || jStat.pooledvariance([dataToWork1,dataToWork2])===NaN || jStat.pooledvariance([dataToWork1,dataToWork2])===undefined){
-                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
+                            temp="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
-                            temp+=jStat.pooledvariance([dataToWork1,dataToWork2]).toFixed(2)+"";
+                            temp=jStat.pooledvariance([dataToWork1,dataToWork2]).toFixed(2)+"";
                             temp+='<h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>'+temp +'</strong></h3>';
                         }
                         //añado la respuesta a lo que se va mostrar
-                    html += `<li><h3 class="display-5">Varianza Agrupada</h3></li><hr><br>`+temp;
+                    html += `<li><h3 class="display-6">Varianza Agrupada</h3></li><hr><br>`+temp;
                     
                     break;
                     default:
-                        html+="Algo esta jodido"+operations;
+                        html+="Algo salió mal "+operations;
                         break;
                 }
             });
