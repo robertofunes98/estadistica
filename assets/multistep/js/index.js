@@ -87,10 +87,11 @@ function getValuesForFrequencyTable(){
     columns = [];
     groupNumbers= $("input[name='groupNumbers[]']:checked").val();
     columnsRequired = $("input[name='columnsRequired[]']:checked").val();
+
     $('input[name="columns[]"]:checked').each(function() {
         columns.push($(this).val());
     });
-  
+
     $("#resultsFREQTABLE").html(freqTable(groupNumbers,columnsRequired,columns));
 }
 
@@ -121,11 +122,11 @@ function tablaDeFrecuencias(){
                     <p>¿Que forma de evaluacion de las variables usará?</p>
                     
                     <div class="inputGroup">
-                        <input id="definedvariables" name="columnsRequired[]" type="radio" checked value="no">
+                        <input id="definedvariables" name="columnsRequired[]" type="radio" checked value="si">
                         <label for="definedvariables">Variables definidas con valor unico</label>
                     </div>
                     <div class="inputGroup">
-                        <input id="unworkedData" name="columnsRequired[]" type="radio" value="si"/>
+                        <input id="unworkedData" name="columnsRequired[]" type="radio" value="no"/>
                         <label for="unworkedData">Datos no trabajados en una sola columna</label>
                     </div>
                 </div>`,

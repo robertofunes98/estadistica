@@ -33,29 +33,10 @@ function initGrid()
         outsideClickDeselects: false,
         bindRowsWithHeaders: 'strict',
         autoColumnSize: true,
-        language: 'es-MX',
-        customBorders: [
-            {
-              
-              top: {
-                width: 2,
-                color: '#5292F7'
-              },
-              left: {
-                width: 2,
-                color: 'orange'
-              },
-              bottom: {
-                width: 2,
-                color: 'red'
-              },
-              right: {
-                width: 2,
-                color: 'magenta'
-              }
-            }
-           ]
+        language: 'es-MX'
     });
+
+    console.log("data grid iniciado ");
 }
 
 
@@ -347,7 +328,7 @@ function generateFrequencyArrayForGroupedData(evaluationDataClean)
 }
 
 
-function generateFrequencyTableForNonAgrupatedData(variablesToEvaluate)
+function generateFrequencyTableForWorkedData(variablesToEvaluate)
 {
     let evaluationDataClean = [];
     var evaluationVariableNameClean = [];
@@ -1014,10 +995,10 @@ function dispersionMeasure(groupNumbers,columns,operation){
 
 function freqTable(groupNumbers,columnsRequired,columns){
     console.log(columns);
-    if(columnsRequired){
-        $table = generateFrequencyTableForNonAgrupatedData(columns);
-    }else{
-        $table = generateFrequencyTableForAgrupatedData(columns);
+    if(columnsRequired === "si"){
+        $table = generateFrequencyTableForWorkedData(columns);
+    }else if(columnsRequired=== "no"){
+        $table = generateFrequencyTableForNonWorkedData(columns[0]);
     }
    return $table;
 }
