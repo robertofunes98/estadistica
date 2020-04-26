@@ -248,12 +248,14 @@
             var $this = this;
             $this.next.click(function() {
                 var  arrayMedidas = {
-                    "TFREQ":'<h3 class="display-6 text-center" style="width:90%!important">Tabla de frequencia</h3>',
+                    "TFREQ":'<h3 class="display-6 text-center" style="width:90%!important">Tabla de frequencias</h3>',
                     "MTC":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>',
                     "MPOS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
                     "MDIS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de dispersión</h3>',
                 }
                 var nextIdx = $this.currentStepIdx;
+
+
                 //alert(nextIdx);
                 var res = $("input[name='groupNumbers[]']:checked").val();
                 if(nextIdx==1 && res=="si"){
@@ -278,6 +280,8 @@
                     $this.element.modal('hide');
                     return;
                 }
+
+
                 if (nextIdx >= $this.stepsCount) {
                     $this.next.text($this.options.finishText);
                     $this.next.addClass("finish_modal")
@@ -289,14 +293,22 @@
                     }else if($this.options.title==arrayMedidas["MDIS"]){
                         valuesFromMDISP();
                     }
+                    else if($this.options.title==arrayMedidas["TFREQ"])
+                    {
+                        getValuesForFrequencyTable();
+                    }
                 } else {
                     $this.next.text($this.options.nextText);
                 }
+
                 if (nextIdx + 1 <= 1) {
                     $this.prev.addClass(_disabledClass).attr(_disabledClass, _disabledClass);
                 } else {
                     $this.prev.removeClass(_disabledClass).removeAttr(_disabledClass);
                 }
+
+
+
                 $this._completeStep(nextIdx);
                 $this._showContent(nextIdx + 1);
 

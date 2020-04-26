@@ -43,7 +43,7 @@ include "components/navbar.html";
         <input type="text" id="variableName" placeholder="Este es una nueva variable">
         <button onclick="changeVariableName()">cambiar nombre de variable</button>
         <br>
-        <button onclick="generateFrequencyTableForAgrupatedData()">
+        <button onclick="generateFrequencyTableForNonWorkedData()">
             generar tabla 1
         </button>
         <button onclick="generateFrequencyTableForNonAgrupatedData([0,1,2,3,4,5,6])">
