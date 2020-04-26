@@ -14,10 +14,10 @@ function initGrid()
     headers = ['Variable 1', 'Variable 2', 'Variable 3', 'Variable 4', 'Variable 5', 'Variable 6', 'Variable 7'];
 
 
-    var data = new Array(20);
+    var data = new Array(30);
 
     for (let i = 0; i < data.length; i++) {
-        data[i]=new Array(15);
+        data[i]=new Array(26);
     }
 
     var container = document.getElementById('dataGrid');

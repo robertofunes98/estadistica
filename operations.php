@@ -33,7 +33,12 @@ include "components/navbar.html";
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
-        <div id="dataGrid">
+        <div id="dataGrid" style="
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 80px;
+">
         </div>
         <input type="text" id="variableName" placeholder="Este es una nueva variable">
         <button onclick="changeVariableName()">cambiar nombre de variable</button>
