@@ -69,11 +69,9 @@ function countUnique(iterable) {
     return new Set(iterable);
 }
 
-function generateFrequencyTableForAgrupatedData()
+function generateFrequencyTableForAgrupatedData(colIndex)
 {
-    var header = prompt("Que variable desea evaluar?");
-
-    var evaluationData = htDataGrid.getSourceDataAtCol(header);
+    var evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
 
     var evaluationDataClean = evaluationData.filter(Boolean);
 
@@ -167,7 +165,7 @@ function generateFrequencyTableForAgrupatedData()
 
         result2 += "</table>"
 
-        document.getElementById('response').innerHTML=result+result2;
+        return result2;
     }
     else
     {
@@ -279,7 +277,7 @@ function generateFrequencyTableForAgrupatedData()
 
         result2 += "</table>"
 
-        document.getElementById('response').innerHTML=result+result2;
+        return result2;
     }
 }
 
@@ -355,7 +353,7 @@ function generateFrequencyTableForNonAgrupatedData(variablesToEvaluate)
 
     result2 += "</table>"
 
-    document.getElementById('response').innerHTML=result+result2;
+    return result2;
 
 }
 
