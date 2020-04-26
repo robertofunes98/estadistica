@@ -22,11 +22,11 @@ include "components/navbar.html";
 		</li>
 		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasDispersion()">
         <i class="fas fa-arrows-alt"></i>
-			<span class="tooltip">Medidas de Dispercion</span>
+			<span class="tooltip">Medidas de Disperción</span>
 		</li>
 		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasPosicion()">
         <i class="fas fa-chart-bar" ></i>
-			<span class="tooltip">Medidas de posicion</span>
+			<span class="tooltip">Medidas de posición</span>
 		</li>
 	</ul>
 </nav>
@@ -34,13 +34,13 @@ include "components/navbar.html";
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
         <div id="dataGrid" style="
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 80px;
-">
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 80px;
+        ">
         </div>
-        <input type="text" id="variableName" placeholder="Este es una nueva variable">
+       <!-- <input type="text" id="variableName" placeholder="Este es una nueva variable">
         <button onclick="changeVariableName()">cambiar nombre de variable</button>
         <br>
         <button onclick="generateFrequencyTableForNonWorkedData()">
@@ -50,9 +50,7 @@ include "components/navbar.html";
             generar tabla 2
         </button>
         <div id="response">
-
-
-        </div>
+        </div>-->
     </main>
 </div>
 
@@ -68,5 +66,6 @@ $('ul li').on('click', function() {
 	$('li').removeClass('active');
 	$(this).addClass('active');
 });
-
+$("#home").removeClass("active");
+$("#operations").addClass("active");
 </script>

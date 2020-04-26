@@ -34,11 +34,11 @@
     overflow: hidden;
   }
   .inputGroup label:before {
-    width: 10px;
+    width: 15px;
     height: 10px;
     border-radius: 50%;
     content: '';
-    background-color: #5562eb;
+    background-color: #2f2f2f;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -61,7 +61,7 @@
     border-radius: 50%;
     z-index: 2;
     position: absolute;
-    right: 30px;
+    right: 15%;
     top: 50%;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
@@ -78,8 +78,8 @@
     opacity: 1;
   }
   .inputGroup input:checked ~ label:after {
-    background-color: #54E0C7;
-    border-color: #54E0C7;
+    background-color: #ffc107;
+    border-color: #dda602;
   }
   .inputGroup input {
     width: 32px;
