@@ -69,7 +69,7 @@ function countUnique(iterable) {
     return new Set(iterable);
 }
 
-function generateFrequencyTableForAgrupatedData(colIndex)
+function generateFrequencyTableForNonWorkedData(colIndex)
 {
     var evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
 
@@ -169,87 +169,27 @@ function generateFrequencyTableForAgrupatedData(colIndex)
     }
     else
     {
-        var range = evaluationDataClean[evaluationDataClean.length-1] - evaluationDataClean[0];
-    
-        var classNumber = Math.round(1 + 3.322 * Math.round(getBaseLog(10, evaluationDataClean.length)));
+        let frequencyData = generateFrequencyArrayForGroupedData(evaluationDataClean);
 
-        var classWidth = Math.ceil(range/classNumber);
-
-        //TODO: asdasd
-        var rawClassNumber = 1 + 3.322 * getBaseLog(10, evaluationDataClean.length);
-        var rawClassWidth = range/classNumber;
-
-        var frequencyData =
-        [
-            ['Clase', 'Marca clase','Frecuencia absoluta', 'Frecuencia relativa', 'Frecuencia acumulada']
-        ];
-
-        var classvalue = parseInt(evaluationDataClean[0]);
-
-        let acumulatedfrequency = 0;
-
-        //vaiables para hallar la mediana
-        let average = evaluationDataClean.length/2;
-        let median=null;
-
-        for(let i=0; i < classNumber; i++)
+        for (let i=1; i<frequencyData.length; i++)
         {
-            var frequencyCounter = 0;
+            totalFrequency+=frequencyData[i][2];
 
-            for(let j=0; j < evaluationDataClean.length; j++)
-            {
-                if(evaluationDataClean[j] >= classvalue && evaluationDataClean[j] < classvalue+classWidth)
-                {
-                    frequencyCounter++;
-                }
-            }
-
-            totalFrequency+=frequencyCounter;
-
-            totalRelativeFrequency+=(frequencyCounter/evaluationDataClean.length);
-
-            var classLimit = classvalue+classWidth;
-
-            let previusAcumulatedfrequency = acumulatedfrequency;
-
-            acumulatedfrequency+=frequencyCounter;
-
-            //en este caos si da true es que ese es el intervalo mediano
-            if(acumulatedfrequency > average)
-            {
-                //calculando medidas de tendencia central
-                //mediana
-                if(true && median === null)
-                {
-                    median = medianForGroupedData([classvalue, classLimit], average, previusAcumulatedfrequency, frequencyCounter, classWidth);
-                }
-
-            }
-
-            frequencyData.push(
-                [
-                    [classvalue, classLimit],
-                    (classvalue + classLimit)/2,
-                    frequencyCounter,
-                    frequencyCounter/evaluationDataClean.length,
-                    acumulatedfrequency
-                ]
-            );
-
-            classvalue+=classWidth;
+            totalRelativeFrequency+=frequencyData[i][3];
         }
 
+        //TODO: asi se procesa la mediana
+        let median = medianForGroupedData(frequencyData, evaluationDataClean.length);
+        //TODO: asi se procesa la moda
         let mode = modeForGroupedData(frequencyData);
-
+        //TODO: asi se procesa la media
         let resultAverageForGroupeddata = averageForGroupedData(frequencyData, evaluationDataClean.length);
 
-        var result = "<p style='color: white;'>La amplitud o rango es: "+range+
-        `<br>El numero de clases es: `+classNumber+
-        `<br>El ancho de clase es: `+ classWidth+
-        `<br><br> la mediana para datos grupados es `+median
-            +"<br>La moda para datos agrupados es "+mode+"<br>La media para datos agrupados es "+resultAverageForGroupeddata+"</p><br><br>";
+        //TODO: eliminar este TODO
+        console.log("mediana: "+median+"; moda: "+mode+"; media: "+resultAverageForGroupeddata);
 
-        var result2="";
+
+        let result2="";
 
         result2 += "<table class='table table-striped table-dark'>"
 
@@ -279,6 +219,109 @@ function generateFrequencyTableForAgrupatedData(colIndex)
 
         return result2;
     }
+}
+
+function calculateMeasuresOfCentralTendency(colIndex)
+{
+    let evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
+
+    let evaluationDataClean = evaluationData.filter(Boolean);
+
+    let isCualitativeData, cualitative, cuantitative;
+
+    cualitative=0;
+    cuantitative=0;
+
+    evaluationDataClean.forEach(element => {
+        if(isNaN(element))
+        {
+            if(typeof element === 'string')
+                cualitative++;
+            else
+            {
+                alert("Revise el tipo de datos, hay datos imposibles de evaluar");
+                return;
+            }
+        }
+        else
+            cuantitative++;
+    });
+
+    if(cualitative > 0 && cuantitative > 0)
+    {
+        alert("Revise el tipo de datos, hay datos cualitativos y cunatitativos en la misma variable");
+        return;
+    }
+    else
+        isCualitativeData = cualitative > 0;
+
+    if(isCualitativeData)
+    {
+        alert("Las medidas de tencian central para datos agrupados solo se pueden calcular con vairblaes cuantitativas");
+        return;
+    }
+    else
+        evaluationDataClean.sort(function(a, b){return a-b});
+
+    let frequencyData = generateFrequencyArrayForGroupedData(evaluationDataClean);
+
+    //TODO: asi se procesa la mediana
+    let median = medianForGroupedData(frequencyData, evaluationDataClean.length);
+    //TODO: asi se procesa la moda
+    let mode = modeForGroupedData(frequencyData);
+    //TODO: asi se procesa la media
+    let resultAverageForGroupeddata = averageForGroupedData(frequencyData, evaluationDataClean.length);
+
+    return [median, mode, resultAverageForGroupeddata];
+}
+
+function generateFrequencyArrayForGroupedData(evaluationDataClean)
+{
+    let range = evaluationDataClean[evaluationDataClean.length - 1] - evaluationDataClean[0];
+
+    let classNumber = Math.round(1 + 3.322 * Math.round(getBaseLog(10, evaluationDataClean.length)));
+
+    let classWidth = Math.ceil(range / classNumber);
+
+    let frequencyData =
+        [
+            ['Clase', 'Marca clase','Frecuencia absoluta', 'Frecuencia relativa', 'Frecuencia acumulada']
+        ];
+
+    let classvalue = parseInt(evaluationDataClean[0]);
+
+    let acumulatedfrequency = 0;
+
+    for(let i=0; i < classNumber; i++)
+    {
+        let frequencyCounter = 0;
+
+        for(let j=0; j < evaluationDataClean.length; j++)
+        {
+            if(evaluationDataClean[j] >= classvalue && evaluationDataClean[j] < classvalue+classWidth)
+            {
+                frequencyCounter++;
+            }
+        }
+
+        let classLimit = classvalue + classWidth;
+
+        acumulatedfrequency+=frequencyCounter;
+
+        frequencyData.push(
+            [
+                [classvalue, classLimit],
+                (classvalue + classLimit)/2,
+                frequencyCounter,
+                frequencyCounter/evaluationDataClean.length,
+                acumulatedfrequency
+            ]
+        );
+
+        classvalue+=classWidth;
+    }
+
+    return frequencyData;
 }
 
 
@@ -357,12 +400,30 @@ function generateFrequencyTableForNonAgrupatedData(variablesToEvaluate)
 
 }
 
+
+
 /**
  * intervalN2 es un array de dos posiciones numericas [number, number]
  * average es el promedio de los datos
  * **/
-function medianForGroupedData(intervalN2, average, previusAcumulatedfrequency, absoluteFrequencyOfMeidanInterval, intervalAmplitude) {
-    return roundToXDecimals(intervalN2[0] + (((average - previusAcumulatedfrequency) / absoluteFrequencyOfMeidanInterval) * intervalAmplitude),2);
+function medianForGroupedData(data, totalCountOfElements) {
+
+    let N2 = totalCountOfElements/2;
+
+    let median=0;
+
+    let intervalAmplitude = data[1][0][1] - data[1][0][0];
+
+    for(let i=1; i < data.length; i++)
+    {
+        //es el intervalo mediano
+        if(data[i][4] > N2 && median === 0)
+        {
+            median = data[i][0][0] + (((N2 - data[i-1][4]) / data[i][4]) * intervalAmplitude);
+        }
+    }
+
+    return roundToXDecimals(median,2);
 }
 
 function modeForGroupedData(data) {
