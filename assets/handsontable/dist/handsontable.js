@@ -31176,7 +31176,7 @@ function () {
         }
 
         style = div.style;
-        style.backgroundColor = this.settings[position] && this.settings[position].color ? this.settings[position].color : settings.border.color;
+        style.backgroundColor = this.settings[position] && this.settings[position].color ? this.settings[position].color : "".concat("#ffc107");
         style.height = this.settings[position] && this.settings[position].width ? "".concat(this.settings[position].width, "px") : "".concat(settings.border.width, "px");
         style.width = this.settings[position] && this.settings[position].width ? "".concat(this.settings[position].width, "px") : "".concat(settings.border.width, "px");
         this.main.appendChild(div);

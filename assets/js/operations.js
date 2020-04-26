@@ -32,7 +32,29 @@ function initGrid()
         manualColumnResize: true,
         outsideClickDeselects: false,
         bindRowsWithHeaders: 'strict',
-        autoColumnSize: true
+        autoColumnSize: true,
+        language: 'es-MX',
+        customBorders: [
+            {
+              
+              top: {
+                width: 2,
+                color: '#5292F7'
+              },
+              left: {
+                width: 2,
+                color: 'orange'
+              },
+              bottom: {
+                width: 2,
+                color: 'red'
+              },
+              right: {
+                width: 2,
+                color: 'magenta'
+              }
+            }
+           ]
     });
 }
 

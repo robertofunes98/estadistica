@@ -95,3 +95,13 @@
     cursor: pointer;
     visibility: hidden;
   }
+
+
+  .wtBorderByWicho {
+    background-color: #ffc107!important;
+    height: 2px;
+    width: 49px;
+    display: block;
+    top: 26px;
+    left: 50px;
+  }

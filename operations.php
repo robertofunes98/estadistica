@@ -8,6 +8,8 @@ include "components/navbar.html";
 
 <script src="assets/handsontable/dist/handsontable.full.min.js"></script>
 <link href="assets/handsontable/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="assets/handsontable/dist/languages/all.js"></script>
+
 <link href="assets/navStyle.css" rel="stylesheet" media="screen">
 
 <nav class="sidebar-navigation">
@@ -68,4 +70,17 @@ $('ul li').on('click', function() {
 });
 $("#home").removeClass("active");
 $("#operations").addClass("active");
+Swal.fire({
+  title: '<strong>Bienvenid@! a nuestro sistema estadistico</strong>',
+  icon: 'info',
+  html:
+    'Actualmente esta en una fase beta, <br> ' +
+    'pronto añadiremos más y mejores funciones!<br>' +
+    'Pd. todas las operaciones se hacen con datos <u>poblacionales</u>',
+  showCloseButton: true,
+
+  focusConfirm: false,
+  confirmButtonText:
+    '<i class="fa fa-thumbs-up"></i> Perfecto!'
+})
 </script>
