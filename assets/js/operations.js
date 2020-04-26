@@ -482,21 +482,23 @@ function roundToXDecimals(number, decimals)
 }
 
 function centralTendence(agroupNumbers,columns,operations){
-    var evaluationData = htDataGrid.getSourceDataAtCol(columns);
-
-    var dataToWork = [];
-    //Variable donde se almacenara las respuestas
-    var html = ` <ul class="list-unstyled"> `
-    //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
-    evaluationData.forEach(element => {
-        if(element!=undefined){
-            dataToWork.push(parseFloat(element));
-        }
-    });
-
-    console.log(dataToWork);
+    
+ 
     //Valido si selecciono numeros agrupados
         if(agroupNumbers=="no"){
+            var evaluationData = htDataGrid.getSourceDataAtCol(columns);
+
+            var dataToWork = [];
+            //Variable donde se almacenara las respuestas
+            var html = ` <ul class="list-unstyled"> `
+            //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
+            evaluationData.forEach(element => {
+                if(element!=undefined){
+                    dataToWork.push(parseFloat(element));
+                }
+            });
+        
+            console.log(dataToWork);
             //Si no selecciono recorro el arreglo de operaciones que selecciono
             operations.forEach(element => {
                 switch(element){
@@ -545,9 +547,78 @@ function centralTendence(agroupNumbers,columns,operations){
                 }
             });
         }else{
-            //Aca entraria si es de datos agrupados
-            html+="Aca irian las respuestas de datos agrupados ";
-        }
+           //Aca entraria si es de datos agrupados
+           var evaluationData1 = htDataGrid.getSourceDataAtCol(columns[0]);
+           var evaluationData2 = htDataGrid.getSourceDataAtCol(columns[1]);
+        
+
+         
+
+           var dataToWork1 = [];
+           var dataToWork2 = [];
+           //Variable donde se almacenara las respuestas
+           var html = ` <ul class="list-unstyled"> `
+           //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
+           evaluationData1.forEach(element => {
+               if(element!=undefined && element!=NaN){
+                   dataToWork1.push(parseFloat(element));
+               }
+           });
+           evaluationData2.forEach(element => {
+               if(element!=undefined && element!=NaN){
+                   dataToWork2.push(parseFloat(element));
+               }
+           });
+           console.log(dataToWork1+" "+dataToWork2);
+           //Si no selecciono recorro el arreglo de operaciones que selecciono
+           operation.forEach(element => {
+               switch(element){
+                 
+                   //Caso Mediana
+                   case "1":
+                    var temp="";
+                        //Validaciones de errores
+                        if(jStat.median(dataToWork1,dataToWork2)+""=="NaN" || jStat.median(dataToWork1,dataToWork2)===NaN || jStat.median(dataToWork1,dataToWork2)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            //añado la respuesta a lo que se va mostrar
+                            temp+=jStat.median(dataToWork1,dataToWork2).toFixed(2);
+                        }
+                    html += `<li>Mediana: ` +temp+` </li>`;
+                    break;
+                    //Caso Moda
+                    case "2":
+                    var temp="";
+                        //Validaciones de errores
+                        if(jStat.mode(dataToWork1,dataToWork2)+""=="NaN" || jStat.mode(dataToWork1,dataToWork2)===NaN || jStat.mode(dataToWork1,dataToWork2)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            //añado la respuesta a lo que se va mostrar
+                            temp+=jStat.mode(dataToWork1,dataToWork2).toFixed(2);
+                        }
+                    html += `<li>Moda: ` +temp+` </li>`;
+                    break;
+                    //Caso media
+                    case "3":
+                    var temp="";
+                        //Validaciones de errores
+                        if( jStat.mean(dataToWork1,dataToWork2)+""=="NaN" || jStat.mean(dataToWork1,dataToWork2)===NaN || jStat.mean(dataToWork1,dataToWork2)===undefined){
+                            temp+="Error, verifique que ha insertado numeros o seleccionado la columna correspondiente";
+                        }
+                        else{
+                            temp+=jStat.mean(dataToWork1,dataToWork2).toFixed(2)+"";
+                        }
+                        //añado la respuesta a lo que se va mostrar
+                    html += `<li>Media: ` +temp+` </li>`;
+                    break;
+                    default:
+                        html+="Algo esta jodido"+operations;
+                        break;
+               }
+           });
+       }
 
     html +=`</ul>`;
     return html;
@@ -916,6 +987,17 @@ function dispersionMeasure(groupNumbers,columns,operation){
         html +=`</ul>`;
         return html;
         
+}
+
+
+function freqTable(groupNumbers,columnsRequired,columns){
+    console.log(columns);
+    if(columnsRequired){
+        $table = generateFrequencyTableForNonAgrupatedData(columns);
+    }else{
+        $table = generateFrequencyTableForAgrupatedData(columns);
+    }
+   return $table;
 }
 
 function roundNumber(num, scale) {

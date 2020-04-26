@@ -258,6 +258,7 @@
 
                 //alert(nextIdx);
                 var res = $("input[name='groupNumbers[]']:checked").val();
+                var resTable = $("input[name='columnsRequired[]']:checked").val();
                 if(nextIdx==1 && res=="si"){
                     switch ($this.options.title) {
                         case arrayMedidas["TFREQ"]:
@@ -275,6 +276,10 @@
                     }
                 }else if(nextIdx==1 && res=="no"){
                     columnsVerify(false);
+                }else if(nextIdx==2 && resTable=="no"){
+                    columnsTable(false);
+                }else if(nextIdx==2 && resTable=="si"){
+                    columnsTable(true);
                 }
                 if (nextIdx >= $this.stepsCount + 1) {
                     $this.element.modal('hide');

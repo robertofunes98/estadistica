@@ -16,7 +16,7 @@ include "components/navbar.html";
             <i class="fas fa-table"></i>
             <span class="tooltip">Tabla de frecuencias</span>
         </li>
-		<li data-toggle="modal" data-target="#submitModal" onclick="medidasTendenciaCentral();centralTendence()">
+		<li data-toggle="modal" data-target="#submitModal" onclick="medidasTendenciaCentral();">
         <i class="fas fa-bullseye"></i>
 			<span class="tooltip">Medidas de tendencia central</span>
 		</li>

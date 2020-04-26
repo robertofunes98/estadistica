@@ -71,8 +71,12 @@ function medidasTendenciaCentral(){
 }
 function valuesFromMTC(){
         operation = [];
+        columns = [];
         groupNumbers= $("input[name='groupNumbers[]']:checked").val();
-        columns= $("input[name='columns[]']:checked").val();
+        
+        $('input[name="columns[]"]:checked').each(function() {
+            columns.push($(this).val());
+            });
         $('input[name="operation[]"]:checked').each(function() {
         operation.push($(this).val());
         });
@@ -80,12 +84,14 @@ function valuesFromMTC(){
 }
 
 function getValuesForFrequencyTable(){
+    columns = [];
     groupNumbers= $("input[name='groupNumbers[]']:checked").val();
-    columns= $("input[name='columns[]']:checked").val();
-    $('input[name="operation[]"]:checked').each(function() {
-        operation.push($(this).val());
+    columnsRequired = $("input[name='columnsRequired[]']:checked").val();
+    $('input[name="columns[]"]:checked').each(function() {
+        columns.push($(this).val());
     });
-    $("#resultsMTC").html(centralTendence(groupNumbers,columns,operation));
+  
+    $("#resultsFREQTABLE").html(freqTable(groupNumbers,columnsRequired,columns));
 }
 
 function tablaDeFrecuencias(){
@@ -115,11 +121,11 @@ function tablaDeFrecuencias(){
                     <p>¿Que forma de evaluacion de las variables usará?</p>
                     
                     <div class="inputGroup">
-                        <input id="definedvariables" name="variablesType[]" type="radio" checked value="definedvariables">
+                        <input id="definedvariables" name="columnsRequired[]" type="radio" checked value="no">
                         <label for="definedvariables">Variables definidas con valor unico</label>
                     </div>
                     <div class="inputGroup">
-                        <input id="unworkedData" name="variablesType[]" type="radio" value="unworkedData"/>
+                        <input id="unworkedData" name="columnsRequired[]" type="radio" value="si"/>
                         <label for="unworkedData">Datos no trabajados en una sola columna</label>
                     </div>
                 </div>`,
@@ -128,50 +134,15 @@ function tablaDeFrecuencias(){
                 prevText:'Atras'
             },{
                 content:`
-                    <!--Esto se debe mostrar si elige variables definidas con valor unico, debe ser de multiple eleccion-->
-                <div>
-                    <p>Seleccione la columna</p>
-                    <div class="inputGroup">
-                        <input id="0" name="columnsPOS[]" type="checkbox" checked value="0"/>
-                        <label for="0">A</label>
-                    </div>
-                    <div class="inputGroup">
-                        <input id="1" name="columnsPOS[]" type="checkbox" value="1"/>
-                        <label for="1">B</label>
-                    </div>
-                    <div class="inputGroup">
-                    <input id="2" name="columnsPOS[]" type="checkbox" value="2" />
-                    <label for="2">C</label>
-                    </div>
-                </div>`,
-                label:'Seleccion de columnas',
-                nextText:"Siguiente",
-                prevText:'Atras'
-            },
-            {
-                content:`
-                <!--Esto se debe mostrar si elige Datos no trabajados en una sola columna, debe ser de eleccion unica-->
-                <div>
-                    <p>Seleccione la columna</p>
-                    <div class="inputGroup">
-                        <input id="0" name="columnsPOS[]" type="radio" checked value="0"/>
-                        <label for="0">A</label>
-                    </div>
-                    <div class="inputGroup">
-                        <input id="1" name="columnsPOS[]" type="radio" value="1"/>
-                        <label for="1">B</label>
-                    </div>
-                    <div class="inputGroup">
-                    <input id="2" name="columnsPOS[]" type="radio" value="2" />
-                    <label for="2">C</label>
-                    </div>
-                </div>`,
+                   <div id="columnsTable">
+                   </div>
+               `,
                 label:'Seleccion de columnas',
                 nextText:"Siguiente",
                 prevText:'Atras'
             }],
         final:`
-            <div id="resultsDISP"></div>`,
+            <div id="resultsFREQTABLE"></div>`,
         modalSize:'lg',
         finalLabel:'Resultados',
         prevText:'Atras',
@@ -362,7 +333,47 @@ function columnsVerify(multi){
 
   //  $("#operationsDISP").html(opertions);
 }
-
+function columnsTable(multiColumns){
+    var html = "";
+    if(multiColumns){
+        html = `  
+        <!--Esto se debe mostrar si elige variables definidas con valor unico, debe ser de multiple eleccion-->
+        <div>
+        <p>Seleccione la columna</p>
+        <div class="inputGroup">
+            <input id="0" name="columns[]" type="checkbox" checked value="0"/>
+            <label for="0">A</label>
+        </div>
+        <div class="inputGroup">
+            <input id="1" name="columns[]" type="checkbox" value="1"/>
+            <label for="1">B</label>
+        </div>
+        <div class="inputGroup">
+        <input id="2" name="columns[]" type="checkbox" value="2" />
+        <label for="2">C</label>
+        </div>
+    </div>` ;
+    }else{
+        html =`   
+        <!--Esto se debe mostrar si elige Datos no trabajados en una sola columna, debe ser de eleccion unica-->
+        <div>
+            <p>Seleccione la columna</p>
+            <div class="inputGroup">
+                <input id="0" name="columns[]" type="radio" checked value="0"/>
+                <label for="0">A</label>
+            </div>
+            <div class="inputGroup">
+                <input id="1" name="columns[]" type="radio" value="1"/>
+                <label for="1">B</label>
+            </div>
+            <div class="inputGroup">
+            <input id="2" name="columns[]" type="radio" value="2" />
+            <label for="2">C</label>
+            </div>
+        </div>`;
+    }
+    $("#columnsTable").html(html);
+}
 //Validador de checkboxes
 function contaCheckbox(checkItem){
     var checkboxes = $("input[name='columns[]']:checked");
