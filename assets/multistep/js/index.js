@@ -98,25 +98,7 @@ function getValuesForFrequencyTable(){
 function tablaDeFrecuencias(){
     $('.modal').MultiStep({
         title:'<h3 class="display-6 text-center" style="width:90%!important">Tabla de frequencias</h3>',
-        data:[
-            {
-                content:`
-                <div>
-                    <p>¿Que tipo de tabla usará?</p>
-                    <div class="inputGroup">
-                        <input id="groupData" name="groupNumbers[]" type="radio" checked value="groupData">
-                        <label for="groupData">Para datos agrupados</label>
-                    </div>
-                    <div class="inputGroup">
-                        <input id="ungroupData" name="groupNumbers[]" type="radio" value="ungroupData"/>
-                        <label for="ungroupData">Para datos no agrupados</label>
-                    </div>
-                </div>`,
-                label:'Tipo de tabla',
-                nextText:"Siguiente",
-                prevText:'Atras'
-
-            },{
+        data:[{
                 content:`
                 <div>
                     <p>¿Que forma de evaluacion de las variables usará?</p>
