@@ -111,7 +111,7 @@ function generateFrequencyTableForNonWorkedData(colIndex)
     else
         evaluationDataClean.sort(function(a, b){return a-b});
 
-    var countOfUniqueElements = countUnique(evaluationDataClean);
+    let countOfUniqueElements = countUnique(evaluationDataClean);
 
     let totalFrequency = 0, totalRelativeFrequency=0;
 
@@ -139,12 +139,7 @@ function generateFrequencyTableForNonWorkedData(colIndex)
             frequencyData.push([element, frequencyCounter, frequencyCounter/evaluationDataClean.length]);
         });
 
-        var result = "La amplitud o rango es: "+null+
-            `<br>El numero de clases es: `+countOfUniqueElements.size+
-            `<br>El ancho de clase es: `+ null+
-            `<br><br>`;
-
-        var result2="";
+        let result2="";
 
         result2 += "<table class='table table-striped table-dark'>"
 
@@ -266,6 +261,15 @@ function calculateMeasuresOfCentralTendency(colIndex)
     else
         evaluationDataClean.sort(function(a, b){return a-b});
 
+    let countOfUniqueElements = countUnique(evaluationDataClean);
+
+    if(countOfUniqueElements.size <= 10)
+    {
+        alert("Solo hay 10 elementos distintos. Para que nuestro sistema genere las clases neceitamos que proporcione al menos 11 elementos distintos");
+        return;
+    }
+
+
     let frequencyData = generateFrequencyArrayForGroupedData(evaluationDataClean);
 
     //TODO: asi se procesa la mediana
@@ -278,20 +282,74 @@ function calculateMeasuresOfCentralTendency(colIndex)
     return [median, mode, resultAverageForGroupeddata];
 }
 
+function isFloat(n) {
+    return n % 1 !== 0;
+}
+
+function countDecimals(number){
+    let parts = number.split(".");
+
+    return parts[1].length;
+}
+
 function generateFrequencyArrayForGroupedData(evaluationDataClean)
 {
     let range = evaluationDataClean[evaluationDataClean.length - 1] - evaluationDataClean[0];
 
-    let classNumber = Math.round(1 + 3.322 * Math.round(getBaseLog(10, evaluationDataClean.length)));
+    console.log("rango: "+range);
 
-    let classWidth = Math.ceil(range / classNumber);
+    let classNumber = 0;
+
+    let dataIsInt = true;
+
+    let decimalsCount=0;
+
+    let continueOperating=true;
+    let operationType = 0;
+
+    let classWidth;
+
+    while(continueOperating)
+    {
+        if(operationType===0)
+            classNumber = Math.round(1 + (3.322 * (getBaseLog(10, evaluationDataClean.length))));
+        else if(operationType===1)
+            classNumber = Math.ceil(1 + (3.322 * (getBaseLog(10, evaluationDataClean.length))));
+        else
+            classNumber = Math.floor(1 + (3.322 * (getBaseLog(10, evaluationDataClean.length))));
+
+        evaluationDataClean.forEach(element => {
+            if(isFloat(element))
+            {
+                dataIsInt=false;
+
+                if(countDecimals(element) > decimalsCount)
+                    decimalsCount=countDecimals(element);
+            }
+        });
+
+        if(dataIsInt)
+            classWidth = Math.round(range / classNumber);
+        else
+        {
+            classWidth = roundToXDecimals(range / classNumber, decimalsCount);
+        }
+
+        if(((classWidth * classNumber) + Number(evaluationDataClean[0])) > Number(evaluationDataClean[evaluationDataClean.length - 1]) || operationType === 3)
+            continueOperating=false;
+
+        operationType++;
+    }
+
+
+
 
     let frequencyData =
         [
             ['Clase', 'Marca clase','Frecuencia absoluta', 'Frecuencia relativa', 'Frecuencia acumulada']
         ];
 
-    let classvalue = parseInt(evaluationDataClean[0]);
+    let classvalue = Number(evaluationDataClean[0]);
 
     let acumulatedfrequency = 0;
 
@@ -307,14 +365,14 @@ function generateFrequencyArrayForGroupedData(evaluationDataClean)
             }
         }
 
-        let classLimit = classvalue + classWidth;
+        let classLimit = roundToXDecimals(classvalue + classWidth,decimalsCount);
 
         acumulatedfrequency+=frequencyCounter;
 
         frequencyData.push(
             [
-                [classvalue, classLimit],
-                (classvalue + classLimit)/2,
+                [roundToXDecimals(classvalue, decimalsCount), classLimit],
+                roundToXDecimals((classvalue + classLimit)/2, 2),
                 frequencyCounter,
                 frequencyCounter/evaluationDataClean.length,
                 acumulatedfrequency
@@ -450,7 +508,6 @@ function modeForGroupedData(data) {
             ((data[modalInterval][2] - data[modalInterval-1][2]) + (data[modalInterval][2] - data[modalInterval+1][2]))
         ) * (data[modalInterval][0][1]-data[modalInterval][0][0])
     );
-
 
     return roundToXDecimals(mode,2);
 }
