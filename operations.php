@@ -71,7 +71,7 @@ $('ul li').on('click', function() {
 $("#home").removeClass("active");
 $("#operations").addClass("active");
 Swal.fire({
-  title: '<strong>Bienvenid@! a nuestro sistema estadistico</strong>',
+  title: '<strong>Bienvenido/a! a nuestro sistema estadistico</strong>',
   icon: 'info',
   html:
     'Actualmente esta en una fase beta, <br> ' +
