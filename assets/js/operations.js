@@ -552,11 +552,8 @@ function centralTendence(agroupNumbers,columns,operations){
         }else{
            //Aca entraria si es de datos agrupados
            var evaluationData1 = htDataGrid.getSourceDataAtCol(columns[0]);
-           var evaluationData2 = htDataGrid.getSourceDataAtCol(columns[1]);
+          // var evaluationData2 = htDataGrid.getSourceDataAtCol(columns[1]);
         
-
-         
-
            var dataToWork1 = [];
            var dataToWork2 = [];
            //Variable donde se almacenara las respuestas
@@ -564,56 +561,58 @@ function centralTendence(agroupNumbers,columns,operations){
            //Evaluo cuales son indefinidas y las que no las añado en un arreglo para trabajarlas
            evaluationData1.forEach(element => {
                if(element!=undefined && element!=NaN){
-                   dataToWork1.push(parseFloat(element));
+                   dataToWork1.push(element);
                }
            });
-           evaluationData2.forEach(element => {
+          /* evaluationData2.forEach(element => {
                if(element!=undefined && element!=NaN){
                    dataToWork2.push(parseFloat(element));
                }
-           });
-           console.log(dataToWork1+" "+dataToWork2);
+           });*/
+           console.log(dataToWork1);
+           var calcsMTCAgroup = calculateMeasuresOfCentralTendency(columns[0]);
+          // console.log(dataToWork1);
            //Si no selecciono recorro el arreglo de operaciones que selecciono
            operation.forEach(element => {
                switch(element){
-                 
+              
                    //Caso Mediana
                    case "1":
-                    var temp="";
-                        //Validaciones de errores
+                    var temp=""+calcsMTCAgroup[0];
+                   /*     //Validaciones de errores
                         if(jStat.median(dataToWork1,dataToWork2)+""=="NaN" || jStat.median(dataToWork1,dataToWork2)===NaN || jStat.median(dataToWork1,dataToWork2)===undefined){
                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.median(dataToWork1,dataToWork2).toFixed(2);
-                        }
+                        }*/
                     html += `<li><h3 class='display-7'>Mediana:</h3> ` +temp+` </li>`;
                     break;
                     //Caso Moda
                     case "2":
-                    var temp="";
-                        //Validaciones de errores
+                    var temp=""+calcsMTCAgroup[1];
+                       /* //Validaciones de errores
                         if(jStat.mode(dataToWork1,dataToWork2)+""=="NaN" || jStat.mode(dataToWork1,dataToWork2)===NaN || jStat.mode(dataToWork1,dataToWork2)===undefined){
                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
                             temp+=jStat.mode(dataToWork1,dataToWork2).toFixed(2);
-                        }
+                        }*/
                     html += `<li><h3 class='display-7'>Moda:</h3> ` +temp+` </li>`;
                     break;
                     //Caso media
                     case "3":
-                    var temp="";
-                        //Validaciones de errores
+                    var temp=""+calcsMTCAgroup[2];
+                        /*//Validaciones de errores
                         if( jStat.mean(dataToWork1,dataToWork2)+""=="NaN" || jStat.mean(dataToWork1,dataToWork2)===NaN || jStat.mean(dataToWork1,dataToWork2)===undefined){
                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
                             temp+=jStat.mean(dataToWork1,dataToWork2).toFixed(2)+"";
                         }
-                        //añado la respuesta a lo que se va mostrar
+                        //añado la respuesta a lo que se va mostrar*/
                     html += `<li><h3 class='display-7'>Media:</h3> ` +temp+` </li>`;
                     break;
                     default:

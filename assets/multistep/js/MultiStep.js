@@ -265,7 +265,7 @@
                             columnsVerify(true);
                             break;
                         case arrayMedidas["MTC"]:
-                            columnsVerify(true);
+                            columnsVerify(false);
                             break;
                         case arrayMedidas["MDIS"]:
                             columnsVerify(true);
