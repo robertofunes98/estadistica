@@ -265,7 +265,7 @@
                             columnsVerify(true);
                             break;
                         case arrayMedidas["MTC"]:
-                            columnsVerify(true);
+                            columnsVerify(false);
                             break;
                         case arrayMedidas["MDIS"]:
                             columnsVerify(true);
@@ -276,9 +276,9 @@
                     }
                 }else if(nextIdx==1 && res=="no"){
                     columnsVerify(false);
-                }else if(nextIdx==2 && resTable=="no"){
+                }else if(nextIdx==1 && resTable=="no"){
                     columnsTable(false);
-                }else if(nextIdx==2 && resTable=="si"){
+                }else if(nextIdx==1 && resTable=="si"){
                     columnsTable(true);
                 }
                 if (nextIdx >= $this.stepsCount + 1) {
