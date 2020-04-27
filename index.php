@@ -16,13 +16,13 @@ include "components/navbar.html";
         <p class="lead">
           <ul class="list-unstyled color-white">
             <li class="lead">
-              Ronald Trejo
+              Ronald Fernando Gomez Trejo
             </li>
             <li class="lead">
-              Roberto Funes
+              Roberto Enrique Funes Rivera
             </li>
             <li class="lead">
-              Mauricio Orellana
+              Mauricio Alfredo Orellana Orellana
             </li>
           </ul>
         </p>
