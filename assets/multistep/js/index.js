@@ -373,3 +373,62 @@ function contaCheckbox(checkItem){
         return cont;
 }
 
+
+//TODO: probando graficos
+function histogram(){
+    $('.modal').MultiStep({
+        title:'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
+        data:[{
+            content:`
+            <figure class="highcharts-figure">
+                <div id="container"></div>
+                <p class="highcharts-description">
+                    Chart showing how Highcharts can automatically compute a histogram from
+                    source data. In this chart, the source data is also displayed as a
+                    scatter plot.
+                </p>
+            </figure>
+            `,
+            label:'Seleccionar columnas',
+            nextText:"Siguiente",
+            prevText:'Atras'
+        },{
+            content:`
+            <form id="operationsMTC">
+            <div class="inputGroup">
+                <input id="operation1" name="operationPOS[]" type="checkbox" value="1" />
+                <label for="operation1">Decil</label>
+            </div>
+         
+
+            <div class="inputGroup">
+                <input id="operation2" name="operationPOS[]" type="checkbox" value="2""/>
+                <label for="operation2">Percentil</label>
+            </div>
+           
+            
+            <div class="inputGroup">
+                <input id="operation3" name="operationPOS[]" type="checkbox" value="3"/>
+                <label for="operation3">Cuartil</label>
+            </div>
+            <div class="inputGroup">
+                <input id="operation4" name="operationPOS[]" type="checkbox" value="4"/>
+                <label for="operation4">Quintil</label>
+            </div>
+           
+            </form>`,
+            label:'Personalizar resultados',
+            nextText:"Calcular!",
+            prevText:'Atras'
+        }],
+        final:`
+        <div id="resultsPOS"></div>`,
+        modalSize:'lg',
+        finalLabel:'Resultados',
+        prevText:'Atras',
+        finishText:'Cerrar'
+    });
+
+    generateHistogram();
+}
+
