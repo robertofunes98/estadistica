@@ -285,7 +285,16 @@
                     $this.element.modal('hide');
                     return;
                 }
-
+                //Mostrar el input del puntaje z
+                if(nextIdx==2){
+                   $('#operation4'). click(function(){
+                    if($(this). is(":checked")){
+                        $('#znumber').removeAttr('hidden',true);
+                    }else{
+                        $('#znumber').attr('hidden',true);
+                    }
+                });
+                }
 
                 if (nextIdx >= $this.stepsCount) {
                     $this.next.text($this.options.finishText);
