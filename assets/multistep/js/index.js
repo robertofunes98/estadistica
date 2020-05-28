@@ -178,7 +178,12 @@ function medidasDispersion(){
                         <input id="operation3" name="operation[]" type="checkbox" value="3"/>
                         <label for="operation3">Varianza</label>
                     </div>
-                </div>`,
+                     <div class="inputGroup">
+                        <input id="operation4" name="operation[]" type="checkbox" value="4"/>
+                        <label for="operation4">Puntaje Z</label>
+                    </div>
+                    <div><input type='number' id='znumber' hidden></div>
+                </div>`, 
                 label:'Personalizar resultados',
                 nextText:"Calcular!",
                 prevText:'Atras'
@@ -202,7 +207,8 @@ function valuesFromMDISP(){
     $('input[name="operation[]"]:checked').each(function() {
     operation.push($(this).val());
     });
-  $("#resultsDISP").html(dispersionMeasure(groupNumbers,columns,operation));
+    znumber = $("#znumber").val();
+  $("#resultsDISP").html(dispersionMeasure(groupNumbers,columns,operation,znumber));
 
 }
 

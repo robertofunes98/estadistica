@@ -910,7 +910,7 @@ function positionMeasure(columns,operations){
     return html;
 }
 
-function dispersionMeasure(groupNumbers,columns,operation){
+function dispersionMeasure(groupNumbers,columns,operation,znumber){
     console.log(groupNumbers);
     //Valido si selecciono numeros agrupados
         if(groupNumbers=="no"){
@@ -927,7 +927,7 @@ function dispersionMeasure(groupNumbers,columns,operation){
                 }
             });
 
-            console.log(dataToWork);
+            console.log(operation);
 
 
             //Si no selecciono recorro el arreglo de operaciones que selecciono
@@ -962,6 +962,28 @@ function dispersionMeasure(groupNumbers,columns,operation){
                     html += `<li><h3 class="display-6">Varianza</h3></li><hr><br><h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>`+temp +`</strong></h3>`;
                     
                     break;
+
+
+                     //Caso PUNTAJE Z
+                     case "4":
+                        var temp="";
+                        if(znumber!=null || znumber!=0 || znumber!=""){
+                            //Validaciones de errores
+                            if( jStat.zscore(znumber,dataToWork)+""=="NaN" || jStat.zscore(znumber,dataToWork)===NaN || jStat.zscore(znumber,dataToWork)===undefined){
+                                temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
+                            }
+                            else{
+                                temp+=jStat.zscore(znumber,dataToWork).toFixed(2)+"";
+                            }
+                           
+                        }else{
+                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
+                            
+                        }
+                            //añado la respuesta a lo que se va mostrar
+                            html += `<li><h3 class="display-6">Puntaje Z</h3></li><hr><br><h3 class="display-7"> La varianza de los datos proporcionados ≈ <strong>`+temp +`</strong></h3>`;
+ 
+                        break;
                     default:
                         html+="Algo salió mal "+operations;
                         break;
