@@ -420,7 +420,7 @@ function histogram(){
         finishText:'Cerrar'
     });
 
-    generateHistogram(0);
-    generateBoxPlot();
+    //generateHistogram(0);
+    generateBoxPlot(1);
 }
 

@@ -20,6 +20,7 @@ include "components/navbar.html";
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
+
 <style>
 
     .highcharts-figure, .highcharts-data-table table {
