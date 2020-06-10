@@ -16,7 +16,6 @@ include "components/navbar.html";
 <script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
 <style>
 
     .highcharts-figure, .highcharts-data-table table {
@@ -63,15 +62,15 @@ include "components/navbar.html";
             <i class="fas fa-table"></i>
             <span class="tooltip">Tabla de frecuencias</span>
         </li>
-		<li data-toggle="modal" data-target="#submitModal" onclick="medidasTendenciaCentral();">
+		<li data-toggle="modal" data-target="#submitModal" onclick="medidasTendenciaCentral();checkColumns();">
         <i class="fas fa-bullseye"></i>
 			<span class="tooltip">Medidas de tendencia central</span>
 		</li>
-		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasDispersion()">
+		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasDispersion();checkColumns();">
         <i class="fas fa-arrows-alt"></i>
 			<span class="tooltip">Medidas de Disperción</span>
 		</li>
-		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasPosicion()">
+		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasPosicion();checkColumns();">
         <i class="fas fa-chart-bar" ></i>
 			<span class="tooltip">Medidas de posición</span>
 		</li>
@@ -90,6 +89,8 @@ include "components/navbar.html";
             top: 0;
             left: 0;
             margin: 80px;
+            margin-left:100px;
+            z-index:9;
         ">
         </div>
        <!-- <input type="text" id="variableName" placeholder="Este es una nueva variable">
@@ -106,14 +107,22 @@ include "components/navbar.html";
     </main>
 </div>
 
-
+<button id="countRows" onclick="checkColumns()">COUNT ROWS</button>
 
 
 <?php
 include "components/footer.html";
 include "components/stepperBS.html";
 ?>
+
+
+
 <script>
+
+
+
+
+
 $('ul li').on('click', function() {
 	$('li').removeClass('active');
 	$(this).addClass('active');
@@ -133,4 +142,6 @@ Swal.fire({
   confirmButtonText:
     '<i class="fa fa-thumbs-up"></i> Perfecto!'
 })
+
+
 </script>

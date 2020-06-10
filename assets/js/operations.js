@@ -33,13 +33,41 @@ function initGrid()
         outsideClickDeselects: false,
         bindRowsWithHeaders: 'strict',
         autoColumnSize: true,
-        language: 'es-MX'
+        language: 'es-MX'/*,
+        /*afterChange: (changes) => {
+            changes.forEach(([row, prop, oldValue, newValue]) => {
+                checkColumns();
+            });
+          }*/
     });
 
     console.log("data grid iniciado ");
 }
 
+function checkColumns(){
+    $('#cbxOptions').val(null).trigger('change');
+   
+    var columnsWithData = [];
+    for (let index = 0; index < 26; index++) {
+        var evaluationData = htDataGrid.getSourceDataAtCol(index);
+        
 
+        evaluationData.forEach(element => {
+            if(element!=undefined && element!=NaN){
+                if(columnsWithData.indexOf(index)==-1){
+                    columnsWithData.push(index);
+                    
+                    $("#cbxOptions").append("<option id='"+index+"'>"+htDataGrid.getColHeader(index)+"</option>");
+                }
+            }
+        });
+    }
+    console.log(columnsWithData);
+  
+    
+   return columnsWithData;
+
+}
 function changeVariableName()
 {
 

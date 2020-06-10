@@ -33,9 +33,23 @@ function medidasTendenciaCentral(){
 
         },{
             content:`
-                <div id="selectColumns">
-                    
-                </div>`,
+            <script>
+                $(document).ready(function() {
+                    $('.js-example-basic-multiple').select2({
+                        tags: true,
+                        theme: 'classic',
+                        placeholder: 'Selecciona las columnas',
+                        maximumSelectionLength: 2,
+                        language: "es"
+                    });
+                });
+            </script>
+            <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+            <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
+
+            </select>
+            
+               `,
                 label:'Seleccionar columnas',
                 nextText:"Siguiente",
                 prevText:'Atras'
@@ -74,7 +88,7 @@ function valuesFromMTC(){
         columns = [];
         groupNumbers= $("input[name='groupNumbers[]']:checked").val();
         
-        $('input[name="columns[]"]:checked').each(function() {
+        $('#cbxOptions').each(function() {
             columns.push($(this).val());
             });
         $('input[name="operation[]"]:checked').each(function() {
@@ -117,8 +131,21 @@ function tablaDeFrecuencias(){
                 prevText:'Atras'
             },{
                 content:`
-                   <div id="columnsTable">
-                   </div>
+                <script>
+                $(document).ready(function() {
+                    $('.js-example-basic-multiple').select2({
+                        tags: true,
+                        theme: 'classic',
+                        placeholder: 'Selecciona las columnas',
+                        maximumSelectionLength: 2,
+                        language: "es"
+                    });
+                });
+            </script>
+                <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+                <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
+    
+                </select>
                `,
                 label:'Seleccion de columnas',
                 nextText:"Siguiente",
@@ -160,9 +187,21 @@ function medidasDispersion(){
 
             },{
                 content:`
-                <div id="selectColumns">
-                    
-                </div>`,
+                <script>
+                $(document).ready(function() {
+                    $('.js-example-basic-multiple').select2({
+                        tags: true,
+                        theme: 'classic',
+                        placeholder: 'Selecciona las columnas',
+                        maximumSelectionLength: 2,
+                        language: "es"
+                    });
+                });
+            </script>
+                <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+            <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
+
+            </select>`,
                 label:'Seleccionar columnas',
                 nextText:"Siguiente",
                 prevText:'Atras'
@@ -201,7 +240,7 @@ function valuesFromMDISP(){
     operation = [];
     columns =[];
     groupNumbers= $("input[name='groupNumbers[]']:checked").val();
-    $("input[name='columns[]']:checked").each(function() {
+    $('#cbxOptions').each(function() {
         columns.push($(this).val());
         });
     $('input[name="operation[]"]:checked').each(function() {
@@ -218,19 +257,21 @@ function medidasPosicion(){
         data:[{
              content:`
             <div>
-                <p>Seleccione la columna</p>
-                <div class="inputGroup">
-                    <input id="0" name="columnsPOS[]" type="radio" checked value="0"/>
-                    <label for="0">A</label>
-                </div>
-                <div class="inputGroup">
-                    <input id="1" name="columnsPOS[]" type="radio" value="1"/>
-                    <label for="1">B</label>
-                </div>
-                <div class="inputGroup">
-                <input id="2" name="columnsPOS[]" type="radio" value="2" />
-                <label for="2">C</label>
-            </div>
+            <script>
+            $(document).ready(function() {
+                $('.js-example-basic-multiple').select2({
+                    tags: true,
+                    theme: 'classic',
+                    placeholder: 'Selecciona las columnas',
+                    maximumSelectionLength: 2,
+                    language: "es"
+                });
+            });
+        </script>
+            <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+            <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
+
+            </select>
             </div>`,
             label:'Seleccionar columnas',
             nextText:"Siguiente",
@@ -275,7 +316,9 @@ function medidasPosicion(){
 function valuesFromPOS(){
     operation = [];
     //groupNumbers= $("input[name='groupNumbers[]']:checked").val();
-    columns= $("input[name='columnsPOS[]']:checked").val();
+    $('#cbxOptions').each(function() {
+        columns.push($(this).val());
+        });
     $('input[name="operationPOS[]"]:checked').each(function() {
     operation.push($(this).val());
     });
@@ -303,19 +346,10 @@ function columnsVerify(multi){
    `;
     }else{
         columns=`
-        <p>Seleccione la columna</p>
-        <div class="inputGroup">
-            <input id="0" name="columns[]" type="radio" checked value="0"/>
-            <label for="0">A</label>
-        </div>
-        <div class="inputGroup">
-            <input id="1" name="columns[]" type="radio" value="1"/>
-            <label for="1">B</label>
-        </div>
-        <div class="inputGroup">
-            <input id="2" name="columns[]" type="radio" value="2" />
-            <label for="2">C</label>
-        </div>`;
+        <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+            <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
+
+            </select>`;
 
         }
     $("#selectColumns").html(columns);
