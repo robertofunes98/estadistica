@@ -421,11 +421,9 @@ function histogram(){
         data:[{
             content:`
             <figure class="highcharts-figure">
-                <div id="container"></div>
+                <div id="histogramContainer"></div>
                 <p class="highcharts-description">
-                    Chart showing how Highcharts can automatically compute a histogram from
-                    source data. In this chart, the source data is also displayed as a
-                    scatter plot.
+                    
                 </p>
             </figure>
             `,
@@ -434,29 +432,16 @@ function histogram(){
             prevText:'Atras'
         },{
             content:`
-            <form id="operationsMTC">
-            <div class="inputGroup">
-                <input id="operation1" name="operationPOS[]" type="checkbox" value="1" />
-                <label for="operation1">Decil</label>
-            </div>
-         
-
-            <div class="inputGroup">
-                <input id="operation2" name="operationPOS[]" type="checkbox" value="2""/>
-                <label for="operation2">Percentil</label>
-            </div>
-           
             
-            <div class="inputGroup">
-                <input id="operation3" name="operationPOS[]" type="checkbox" value="3"/>
-                <label for="operation3">Cuartil</label>
-            </div>
-            <div class="inputGroup">
-                <input id="operation4" name="operationPOS[]" type="checkbox" value="4"/>
-                <label for="operation4">Quintil</label>
-            </div>
-           
-            </form>`,
+            
+            <figure class="highcharts-figure">
+                <div id="containerBoxPlot"></div>
+                <p class="highcharts-description">
+                    Chart showing the use of box plots with outliers. The chart makes use
+                    of a plot line to show the theoretical mean value across the y-axis.
+                </p>
+            </figure>
+            `,
             label:'Personalizar resultados',
             nextText:"Calcular!",
             prevText:'Atras'
@@ -469,6 +454,7 @@ function histogram(){
         finishText:'Cerrar'
     });
 
-    generateHistogram();
+    //generateHistogram(0);
+    generateBoxPlot(1);
 }
 

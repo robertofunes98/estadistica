@@ -13,7 +13,6 @@ function initGrid()
 {
     headers = ['Variable 1', 'Variable 2', 'Variable 3', 'Variable 4', 'Variable 5', 'Variable 6', 'Variable 7'];
 
-
     var data = new Array(30);
 
     for (let i = 0; i < data.length; i++) {
@@ -100,11 +99,11 @@ function countUnique(iterable) {
     return new Set(iterable);
 }
 
-function generateFrequencyTableForNonWorkedData(colIndex)
+function getInfoFromNonWorkedData(colIndex)
 {
-    var evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
+    let evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
 
-    var evaluationDataClean = evaluationData.filter(Boolean);
+    let evaluationDataClean = evaluationData.filter(Boolean);
 
     let isCualitativeData, cualitative, cuantitative;
 
@@ -112,18 +111,18 @@ function generateFrequencyTableForNonWorkedData(colIndex)
     cuantitative=0;
 
     evaluationDataClean.forEach(element => {
-       if(isNaN(element))
-       {
-           if(typeof element === 'string')
-               cualitative++;
-           else
-           {
-               alert("Revise el tipo de datos, hay datos imposibles de evaluar");
-               return;
-           }
-       }
-       else
-           cuantitative++;
+        if(isNaN(element))
+        {
+            if(typeof element === 'string')
+                cualitative++;
+            else
+            {
+                alert("Revise el tipo de datos, hay datos imposibles de evaluar");
+                return;
+            }
+        }
+        else
+            cuantitative++;
     });
 
     if(cualitative > 0 && cuantitative > 0)
@@ -139,7 +138,20 @@ function generateFrequencyTableForNonWorkedData(colIndex)
     else
         evaluationDataClean.sort(function(a, b){return a-b});
 
-    let countOfUniqueElements = countUnique(evaluationDataClean);
+
+    return [evaluationDataClean, new Set(evaluationDataClean), isCualitativeData];
+}
+
+function generateFrequencyTableForNonWorkedData(colIndex)
+{
+    let dataInfo = getInfoFromNonWorkedData(colIndex);
+
+    let evaluationDataClean = dataInfo[0];
+
+    let countOfUniqueElements = dataInfo[1];
+
+    let isCualitativeData = dataInfo[2];
+
 
     let totalFrequency = 0, totalRelativeFrequency=0;
 
@@ -249,54 +261,26 @@ function generateFrequencyTableForNonWorkedData(colIndex)
 
 function calculateMeasuresOfCentralTendency(colIndex)
 {
-    let evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
 
-    let evaluationDataClean = evaluationData.filter(Boolean);
+    let dataInfo = getInfoFromNonWorkedData(colIndex);
 
-    let isCualitativeData, cualitative, cuantitative;
+    let evaluationDataClean = dataInfo[0];
 
-    cualitative=0;
-    cuantitative=0;
+    let countOfUniqueElements = dataInfo[1];
 
-    evaluationDataClean.forEach(element => {
-        if(isNaN(element))
-        {
-            if(typeof element === 'string')
-                cualitative++;
-            else
-            {
-                alert("Revise el tipo de datos, hay datos imposibles de evaluar");
-                return;
-            }
-        }
-        else
-            cuantitative++;
-    });
-
-    if(cualitative > 0 && cuantitative > 0)
-    {
-        alert("Revise el tipo de datos, hay datos cualitativos y cunatitativos en la misma variable");
-        return;
-    }
-    else
-        isCualitativeData = cualitative > 0;
+    let isCualitativeData = dataInfo[2];
 
     if(isCualitativeData)
     {
-        alert("Las medidas de tencian central para datos agrupados solo se pueden calcular con vairblaes cuantitativas");
+        alert("Las medidas de tencian central para datos agrupados solo se pueden calcular con variables cuantitativas");
         return;
     }
-    else
-        evaluationDataClean.sort(function(a, b){return a-b});
-
-    let countOfUniqueElements = countUnique(evaluationDataClean);
 
     if(countOfUniqueElements.size <= 10)
     {
         alert("Solo hay 10 elementos distintos. Para que nuestro sistema genere las clases neceitamos que proporcione al menos 11 elementos distintos");
         return;
     }
-
 
     let frequencyData = generateFrequencyArrayForGroupedData(evaluationDataClean);
 
@@ -320,11 +304,13 @@ function countDecimals(number){
     return parts[1].length;
 }
 
-function generateFrequencyArrayForGroupedData(evaluationDataClean)
+/**
+ * Recibe un arreglo de datos numerico
+ * Retorna la informacion basica de las series o clases de un arreglo de datos limpio
+ * retorna un objeto que contiene [rango, numero de clases, ancho de clases, numero maximo de decimales que contienen los datos en el arreglo recibido]*/
+function getBasicSeriesData(evaluationDataClean)
 {
     let range = evaluationDataClean[evaluationDataClean.length - 1] - evaluationDataClean[0];
-
-    console.log("rango: "+range);
 
     let classNumber = 0;
 
@@ -369,8 +355,18 @@ function generateFrequencyArrayForGroupedData(evaluationDataClean)
         operationType++;
     }
 
+    return [range, classNumber, classWidth, decimalsCount];
+}
 
+function generateFrequencyArrayForGroupedData(evaluationDataClean)
+{
+    let infoData = getBasicSeriesData(evaluationDataClean);
 
+    let classNumber = infoData[1];
+
+    let classWidth = infoData[2];
+
+    let decimalsCount = infoData[3];
 
     let frequencyData =
         [
@@ -541,7 +537,6 @@ function modeForGroupedData(data) {
 }
 
 function averageForGroupedData(data, N) {
-
     let sum=0;
 
     for(let i=1; i < data.length; i++)
@@ -570,8 +565,6 @@ function roundToXDecimals(number, decimals)
 }
 
 function centralTendence(agroupNumbers,columns,operations){
-    
- 
     //Valido si selecciono numeros agrupados
         if(agroupNumbers=="no"){
             var evaluationData = htDataGrid.getSourceDataAtCol(columns);
@@ -1116,30 +1109,126 @@ function roundNumber(num, scale) {
       }
       return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
     }
-  }
+}
 
 
-function generateHistogram()
+function stringArrayToNumber(evaluationDataClean)
 {
-    //var data = [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3, 3, 4, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3, 3.4, 3, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2, 3.5, 3.6, 3, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3, 3.8, 3.2, 3.7, 3.3, 3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2, 3, 2.2, 2.9, 2.9, 3.1, 3, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8, 2.9, 3, 2.8, 3, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3, 3.4, 3.1, 2.3, 3, 2.5, 2.6, 3, 2.6, 2.3, 2.7, 3, 2.9, 2.9, 2.5, 2.8, 3.3, 2.7, 3, 2.9, 3, 3, 2.5, 2.9, 2.5, 3.6, 3.2, 2.7, 3, 2.5, 2.8, 3.2, 3, 3.8, 2.6, 2.2, 3.2, 2.8, 2.8, 2.7, 3.3, 3.2, 2.8, 3, 2.8, 3, 2.8, 3.8, 2.8, 2.8, 2.6, 3, 3.4, 3.1, 3, 3.1, 3.1, 3.1, 2.7, 3.2, 3.3, 3, 2.5, 3, 3.4, 3];
-
-    var data = htDataGrid.getSourceDataAtCol(0);
-
-    for (let i=0; i<data.length; i++)
+    for (let i = 0; i<evaluationDataClean.length; i++)
     {
-        data[i] = Number(data[i]);
+        evaluationDataClean[i] = Number(evaluationDataClean[i]);
     }
+    return evaluationDataClean;
+}
 
-        Highcharts.chart('container', {
+  //TODO: probando graficos
+function generateHistogram(colIndex)
+{
+    let dataInfo = getInfoFromNonWorkedData(colIndex);
+
+    let evaluationDataClean = dataInfo[0];
+
+    let countOfUniqueElements = dataInfo[1];
+
+    let isCualitativeData = dataInfo[2];
+
+    if(countOfUniqueElements.size <= 10 || isCualitativeData)
+    {
+        let frequencyData = [];
+
+        countOfUniqueElements.forEach(element => {
+            let frequencyCounter = 0;
+
+            for(let j=0; j < evaluationDataClean.length; j++)
+            {
+                if(evaluationDataClean[j] === element)
+                {
+                    frequencyCounter++;
+                }
+            }
+
+            frequencyData.push(frequencyCounter);
+        });
+
+        let evaluateDataArray = Array.from(countOfUniqueElements);
+
+        let histogramLineArray = getHistogramLineArray([evaluateDataArray, frequencyData], true);
+
+        Highcharts.chart('histogramContainer', {
+            chart: {
+                type: 'column'
+            },
             title: {
-                text: 'Highcharts Histogram'
+                text: 'Histogram using a column chart'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: evaluateDataArray,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0,
+                    borderWidth: 0,
+                    groupPadding: 0,
+                    shadow: false
+                }
+            },
+            series: [
+                {
+                    name: 'Dato',
+                    data: frequencyData
+                },
+                {
+                    type: 'line',
+                    lineWidth: 1,
+                    name: '',
+                    color: 'rgba(212,53,19,.75)',
+                    fillColor: 'rgba(212,53,19,.15)',
+                    data: histogramLineArray
+                }
+            ]
+        });
+
+    }
+    else
+    {
+        let infoData = getBasicSeriesData(evaluationDataClean);
+
+        let classNumber = infoData[1];
+
+        let classWidth = infoData[2];
+
+        let histogramLineArray = getHistogramLineArray(evaluationDataClean, false);
+
+        evaluationDataClean = stringArrayToNumber(evaluationDataClean);
+
+        Highcharts.chart('histogramContainer', {
+            title: {
+                text: 'Histograma'
             },
 
             xAxis: [{
-                title: { text: 'Data' },
+                title: { text: 'datos' },
                 alignTicks: false
             }, {
-                title: { text: 'Histogram' },
+                title: { text: 'Histograma' },
                 alignTicks: false,
                 opposite: true
             }],
@@ -1147,23 +1236,14 @@ function generateHistogram()
             yAxis: [{
                 title: { text: 'Data' }
             }, {
-                title: { text: 'Histogram' },
+                title: { text: 'Frecuencia' },
                 opposite: true
             }],
 
             plotOptions: {
                 histogram: {
-                    accessibility: {
-                        pointDescriptionFormatter: function (point) {
-                            var ix = point.index + 1,
-                                x1 = point.x.toFixed(3),
-                                x2 = point.x2.toFixed(3),
-                                val = point.y;
-                            return ix + '. ' + x1 + ' to ' + x2 + ', ' + val + '.';
-                        }
-                    },
-                    binsNumber: 9,
-                    binWidth: 10.99
+                    binsNumber: classNumber,
+                    binWidth: classWidth
                 }
             },
 
@@ -1177,11 +1257,128 @@ function generateHistogram()
             }, {
                 name: 'Data',
                 type: 'scatter',
-                data: data,
+                data: evaluationDataClean,
                 id: 's1',
                 marker: {
                     radius: 1.5
-                }
-            }]
+                },
+                visible:false
+            },
+            {
+                type: 'line',
+                lineWidth: 1,
+                name: 'Normal Distribution',
+                color: 'rgba(212,53,19,.75)',
+                fillColor: 'rgba(212,53,19,.15)',
+                data: histogramLineArray,
+                xAxis: 1,
+                yAxis: 1
+            }
+            ]
         });
+    }
+}
+
+function getHistogramLineArray(evaluationDataClean, isCualitative)
+{
+    if(isCualitative)
+    {
+        let histogramLineArray = [];
+
+        //iniciamos en 0 ya que es data cualitativa, en este no se agregan cabeceras
+        for(let i = 0; i < evaluationDataClean[0].length; i++)
+        {
+            histogramLineArray.push(
+                [i, evaluationDataClean[1][i]]
+            );
+        }
+
+        return histogramLineArray;
+    }
+    else
+    {
+        let frequencyData = generateFrequencyArrayForGroupedData(evaluationDataClean);
+
+        let histogramLineArray = [];
+
+        //iniciamos en 1 ya que el arreglo de frecuencias trae en la primera fila solo las cabeceras que son string, por eso ignoramos la posicion 0
+        for(let i = 1; i < frequencyData.length; i++)
+        {
+            histogramLineArray.push(
+                [
+                    ((frequencyData[i][0][1] + frequencyData[i][0][0])/2),
+                    frequencyData[i][2]
+                ]
+            );
+        }
+
+        return histogramLineArray;
+    }
+}
+
+
+//TODO: Probando generar caja y bigotes
+
+function generateBoxPlot(colIndex)
+{
+    let dataInfo = getInfoFromNonWorkedData(colIndex);
+
+    let evaluationDataClean = dataInfo[0];
+
+    evaluationDataClean = stringArrayToNumber(evaluationDataClean);
+
+    let quartiles = quartielsCorrectly(evaluationDataClean);
+
+    Highcharts.chart('containerBoxPlot', {
+
+
+        chart: {
+            type: 'boxplot',
+            inverted: true
+        },
+
+        title: {
+            text: 'Highcharts Box Plot Example'
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        xAxis: {
+            categories: ['1'],
+            title: {
+                text: 'Experiment No.'
+            }
+        },
+
+        yAxis: {
+            title: {
+                text: 'Observations'
+            }
+        },
+
+        series: [{
+            name: 'Observations',
+            data: [
+                quartiles
+            ],
+            tooltip: {
+                headerFormat: '<em>Experiment No {point.key}</em><br/>'
+            }
+        }]
+
+    });
+}
+
+
+function quartielsCorrectly(array)
+{
+    let x1 =  array[0];
+    let x2 =  jStat.percentile(array, 0.25, true);
+    let x3 =  jStat.percentile(array, 0.50, true);
+    let x4 =  jStat.percentile(array, 0.75, true);
+    let x5 =  array[array.length -1];
+
+    return [x1,x2,x3,x4,x5];
 }

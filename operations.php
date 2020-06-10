@@ -16,6 +16,11 @@ include "components/navbar.html";
 <script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
 <style>
 
     .highcharts-figure, .highcharts-data-table table {
@@ -75,6 +80,7 @@ include "components/navbar.html";
 			<span class="tooltip">Medidas de posición</span>
 		</li>
 
+        <!--TODO:-->
         <li data-toggle="modal"  data-target="#submitModal" onclick="histogram()">
             <i class="fas fa-chart-bar" ></i>
             <span class="tooltip">Histograma</span>
