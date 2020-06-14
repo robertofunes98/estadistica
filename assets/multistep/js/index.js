@@ -445,7 +445,22 @@ function histogram(){
             label:'Personalizar resultados',
             nextText:"Calcular!",
             prevText:'Atras'
-        }],
+        },{
+            content:`
+            
+            
+            <figure class="highcharts-figure">
+                <div id="containerGaussBell"></div>
+                <p class="highcharts-description">
+                    Chart showing the use of box plots with outliers. The chart makes use
+                    of a plot line to show the theoretical mean value across the y-axis.
+                </p>
+            </figure>
+            `,
+                label:'Personalizar resultados',
+                nextText:"Calcular!",
+                prevText:'Atras'
+            }],
         final:`
         <div id="resultsPOS"></div>`,
         modalSize:'lg',
@@ -455,6 +470,7 @@ function histogram(){
     });
 
     //generateHistogram(0);
-    generateBoxPlot(1);
+    generateBoxPlot(0);
+    generateBellCurve(0);
 }
 
