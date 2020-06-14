@@ -63,7 +63,7 @@ include "components/navbar.html";
 
 <nav class="sidebar-navigation">
     <ul class="list-unstyled">
-		<li  data-toggle="modal" data-target="#submitModal" onclick="tablaDeFrecuencias()">
+		<li  data-toggle="modal" data-target="#submitModal" onclick="tablaDeFrecuencias();checkColumns();">
             <i class="fas fa-table"></i>
             <span class="tooltip">Tabla de frecuencias</span>
         </li>
