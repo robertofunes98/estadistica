@@ -252,6 +252,7 @@
                     "MTC":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>',
                     "MPOS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
                     "MDIS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de dispersión</h3>',
+                    "GRAPHICS": '',
                 }
                 var nextIdx = $this.currentStepIdx;
 

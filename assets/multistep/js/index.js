@@ -102,9 +102,10 @@ function getValuesForFrequencyTable(){
     groupNumbers= $("input[name='groupNumbers[]']:checked").val();
     columnsRequired = $("input[name='columnsRequired[]']:checked").val();
 
-    $('input[name="columns[]"]:checked').each(function() {
+      
+    $('#cbxOptions').each(function() {
         columns.push($(this).val());
-    });
+        });
 
     $("#resultsFREQTABLE").html(freqTable(groupNumbers,columnsRequired,columns));
 }
@@ -264,7 +265,7 @@ function medidasPosicion(){
                     theme: 'classic',
                     placeholder: 'Selecciona las columnas',
                     maximumSelectionLength: 2,
-                    language: "es"
+                    language: "es-ES"
                 });
             });
         </script>
@@ -325,6 +326,8 @@ function valuesFromPOS(){
   $("#resultsPOS").html(positionMeasure(columns,operation));
 
 }
+
+
 
 function columnsVerify(multi){
     var columns="";
@@ -417,16 +420,64 @@ function contaCheckbox(checkItem){
 //TODO: probando graficos
 function generateGraphics(){
     $('.modal').MultiStep({
-        title:'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
+        title:'<h3 class="display-6 text-center" style="width:90%!important">Graficos</h3>',
         data:[{
             content:`
-            <figure class="highcharts-figure">
-                <div id="graphicContainer"></div>
-             
-            </figure>
+            <script>
+            $(document).ready(function() {
+                $('.js-example-basic-multiple').select2({
+                    tags: true,
+                    theme: 'classic',
+                    placeholder: 'Selecciona las columnas',
+                    maximumSelectionLength: 1,
+                    language: "es-ES"
+                });
+            });
+        </script>
+        <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+            <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
+
+            </select>
             `,
             label:'Grafico',
             nextText:"Siguiente",
+            prevText:'Atras'
+        },{
+            content:`
+            <div>
+                <p>Seleccione tu gráfica</p>
+                <div class="inputGroup">
+                    <input id="0g" name="graph[]" type="radio" checked value="0"/>
+                    <label for="0g">A</label>
+                </div>
+                <div class="inputGroup">
+                    <input id="1g" name="graph[]" type="radio" value="1"/>
+                    <label for="1g">B</label>
+                </div>
+                <div class="inputGroup">
+                    <input id="2g" name="graph[]" type="radio" value="2" />
+                    <label for="2g">C</label>
+                </div>
+            </div>
+            `,
+            label:'Selecciona tu gráfica',
+            nextText:"Siguiente",
+            prevText:'Atras'
+       
+    },{
+            content:`
+            
+            
+            <figure class="highcharts-figure">
+                <div id="containerBoxPlot"></div>
+                <p class="highcharts-description">
+                    Chart showing the use of box plots with outliers. The chart makes use
+                    of a plot line to show the theoretical mean value across the y-axis.
+                </p>
+            </figure>
+            `,
+            label:'Personalizar resultados',
+            nextText:"Calcular!",
             prevText:'Atras'
         }],
         final:`
@@ -436,6 +487,15 @@ function generateGraphics(){
         prevText:'Atras',
         finishText:'Cerrar'
     });
+    function valuesFromHistogram(){
+        operation = [];
+        graphs= $("input[name='graph[]']:checked").val();
+        $('#cbxOptions').each(function() {
+            columns.push($(this).val());
+            });
+   
+    
+    }
 
     generateHistogram(0);
     generateBoxPlot(0);

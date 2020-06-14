@@ -121,14 +121,14 @@ include "components/navbar.html";
 			<span class="tooltip">Medidas de Disperción</span>
 		</li>
 		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasPosicion();checkColumns();">
-        <i class="fas fa-chart-pie"></i>
-       
+        
+        <i class="fas fa-chart-bar" ></i>
 			<span class="tooltip">Medidas de posición</span>
 		</li>
 
         <!--TODO:-->
         <li data-toggle="modal"  data-target="#submitModal" onclick="generateGraphics()">
-        <i class="fas fa-chart-bar" ></i>
+        <i class="fas fa-chart-pie" ></i>
             <span class="tooltip">Graficos</span>
         </li>
 	</ul>
