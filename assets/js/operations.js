@@ -1333,6 +1333,38 @@ function getHistogramLineArray(evaluationDataClean, isCualitative)
 
 
 //TODO: Probando generar caja y bigotes
+//retorna 0 = cualitativa, 1 = cunatitativa, 2 = imposible evaluar, 3 = datos mixtos
+function evaluateDataType(evaluationDataClean)
+{
+    let isCualitativeData, cualitative, cuantitative;
+
+    cualitative=0;
+    cuantitative=0;
+
+    evaluationDataClean.forEach(element => {
+        if(isNaN(element))
+        {
+            if(typeof element === 'string')
+                cualitative++;
+            else
+            {
+                return 2;
+            }
+        }
+        else
+            cuantitative++;
+    });
+
+    if(cualitative > 0 && cuantitative > 0)
+    {
+        return 3;
+    }
+    else if(cualitative > 0)
+        return 0;
+    else
+        return 1;
+}
+
 
 function generateBoxPlot(colIndex)
 {
@@ -1340,50 +1372,63 @@ function generateBoxPlot(colIndex)
 
     let evaluationDataClean = dataInfo[0];
 
-    evaluationDataClean = stringArrayToNumber(evaluationDataClean);
+    //retorna 0 = cualitativa, 1 = cunatitativa, 2 = imposible evaluar, 3 = datos mixtos
+    switch (evaluateDataType(evaluationDataClean))
+    {
+        case 0:
+            $('#graphicContainer').html('Los datos son cualitativos, por favor ingrese datos cuantitativos para poderlos trabajar');
+            break;
+        case 2:
+            $('#graphicContainer').html('Los datos contienen caracteres imposibles de evaluar');
+            break;
+        case 3:
+            $('#graphicContainer').html('Los datos estan mezclados entre cualitativos y cunatitativos, por favor ingrese solo datos cuantitativos para poderlos trabajar');
+            break;
+        case 1:
+            evaluationDataClean = stringArrayToNumber(evaluationDataClean);
 
-    let quartiles = quartielsCorrectly(evaluationDataClean);
+            let quartiles = quartielsCorrectly(evaluationDataClean);
 
-    Highcharts.chart('graphicContainer', {
+            Highcharts.chart('graphicContainer', {
+                chart: {
+                    type: 'boxplot',
+                    inverted: true
+                },
 
+                title: {
+                    text: 'Highcharts Box Plot Example'
+                },
 
-        chart: {
-            type: 'boxplot',
-            inverted: true
-        },
+                legend: {
+                    enabled: false
+                },
 
-        title: {
-            text: 'Highcharts Box Plot Example'
-        },
+                xAxis: {
+                    categories: ['1'],
+                    title: {
+                        text: 'Experiment No.'
+                    }
+                },
 
-        legend: {
-            enabled: false
-        },
+                yAxis: {
+                    title: {
+                        text: 'Observations'
+                    }
+                },
 
-        xAxis: {
-            categories: ['1'],
-            title: {
-                text: 'Experiment No.'
-            }
-        },
+                series: [{
+                    name: 'Observations',
+                    data: [
+                        quartiles
+                    ],
+                    tooltip: {
+                        headerFormat: '<em>Experiment No {point.key}</em><br/>'
+                    }
+                }]
 
-        yAxis: {
-            title: {
-                text: 'Observations'
-            }
-        },
-
-        series: [{
-            name: 'Observations',
-            data: [
-                quartiles
-            ],
-            tooltip: {
-                headerFormat: '<em>Experiment No {point.key}</em><br/>'
-            }
-        }]
-
-    });
+            });
+            break;
+    }
 }
 
 
