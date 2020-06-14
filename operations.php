@@ -108,7 +108,7 @@ include "components/navbar.html";
 
 <nav class="sidebar-navigation">
     <ul class="list-unstyled">
-		<li  data-toggle="modal" data-target="#submitModal" onclick="tablaDeFrecuencias()">
+		<li  data-toggle="modal" data-target="#submitModal" onclick="tablaDeFrecuencias();checkColumns();">
             <i class="fas fa-table"></i>
             <span class="tooltip">Tabla de frecuencias</span>
         </li>
@@ -121,13 +121,14 @@ include "components/navbar.html";
 			<span class="tooltip">Medidas de Disperción</span>
 		</li>
 		<li data-toggle="modal"  data-target="#submitModal" onclick="medidasPosicion();checkColumns();">
-        <i class="fas fa-chart-bar" ></i>
+        <i class="fas fa-chart-pie"></i>
+       
 			<span class="tooltip">Medidas de posición</span>
 		</li>
 
         <!--TODO:-->
         <li data-toggle="modal"  data-target="#submitModal" onclick="histogram()">
-            <i class="fas fa-chart-bar" ></i>
+        <i class="fas fa-chart-bar" ></i>
             <span class="tooltip">Histograma</span>
         </li>
 	</ul>
@@ -158,7 +159,7 @@ include "components/navbar.html";
     </main>
 </div>
 
-<button id="countRows" onclick="checkColumns()">COUNT ROWS</button>
+
 
 
 <?php
