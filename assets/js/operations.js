@@ -56,7 +56,7 @@ function checkColumns(){
                 if(columnsWithData.indexOf(index)==-1){
                     columnsWithData.push(index);
                     
-                    $("#cbxOptions").append("<option id='"+index+"'>"+htDataGrid.getColHeader(index)+"</option>");
+                    $("#cbxOptions").append("<option value='"+index+"' id='"+index+"'>"+htDataGrid.getColHeader(index)+"</option>");
                 }
             }
         });
