@@ -1,16 +1,30 @@
 
   
-  
-  .sidebar-navigation {
-    min-height: 100vh;
-    width: 80px;
-    float: left;
-    position: fixed;
-    margin-top: 10%;
-    align-items: center;
-    animation-duration: 3s;
-    animation-timing-function: ease-in-out;
+  @media (max-width: 768px) {
+    .sidebar-navigation {
+      min-height: 100vh;
+      width: 80px;
+      float: left;
+      position: fixed;
+      margin-top: 0%;
+      align-items: center;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+    }
   }
+  @media (min-width: 769px) {
+    .sidebar-navigation {
+      min-height: 100vh;
+      width: 80px;
+      float: left;
+      position: fixed;
+      margin-top: 10%;
+      align-items: center;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+    }
+  }
+
   .sidebar-navigation ul {
     text-align: center;
     color: white;
