@@ -1087,7 +1087,6 @@ function dispersionMeasure(groupNumbers,columns,operation,znumber){
         
 }
 
-
 function freqTable(groupNumbers,columnsRequired,columns){
     console.log(columns);
     if(columnsRequired === "si"){

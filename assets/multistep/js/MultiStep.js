@@ -321,8 +321,6 @@
                     $this.prev.removeClass(_disabledClass).removeAttr(_disabledClass);
                 }
 
-
-
                 $this._completeStep(nextIdx);
                 $this._showContent(nextIdx + 1);
 
