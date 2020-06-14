@@ -325,6 +325,17 @@ function valuesFromPOS(){
   $("#resultsPOS").html(positionMeasure(columns,operation));
 
 }
+}
+function valuesFromHistogram(){
+    operation = [];
+    groupNumbers= $("input[name='groupNumbers[]']:checked").val();
+    $('#cbxOptions').each(function() {
+        columns.push($(this).val());
+        });
+    $('input[name="operationPOS[]"]:checked').each(function() {
+    operation.push($(this).val());
+    });
+  $("#resultsPOS").html(positionMeasure(columns,operation));
 
 function columnsVerify(multi){
     var columns="";
