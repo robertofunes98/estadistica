@@ -315,6 +315,7 @@ function medidasPosicion(){
     });
 }
 function valuesFromPOS(){
+    columns= [];
     operation = [];
     //groupNumbers= $("input[name='groupNumbers[]']:checked").val();
     $('#cbxOptions').each(function() {

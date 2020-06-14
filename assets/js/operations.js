@@ -591,7 +591,7 @@ function centralTendence(agroupNumbers,columns,operations){
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
-                            temp+=jStat.median(dataToWork);
+                            temp+=jStat.median(dataToWork).toFixed(2);
                         }
                     html += `<li><h3 class='display-7'>Mediana:</h3> ` +temp+` </li>`;
                     break;
@@ -604,7 +604,7 @@ function centralTendence(agroupNumbers,columns,operations){
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
-                            temp+=jStat.mode(dataToWork);
+                            temp+=jStat.mode(dataToWork).toFixed(2);
                         }
                     html += `<li><h3 class='display-7'>Moda:</h3>  ` +temp+` </li>`;
                     break;
@@ -616,7 +616,7 @@ function centralTendence(agroupNumbers,columns,operations){
                            temp+="Error, verifique lo siguiente:<br> Que ha insertado numeros en las columnas. <br> Ha seleccionado las columnas correspondientes. <br>Las columnas seleccionadas tienen la misma cantidad de valores";
                         }
                         else{
-                            temp+=jStat.mean(dataToWork)+"";
+                            temp+=jStat.mean(dataToWork).toFixed(2)+"";
                         }
                         //añado la respuesta a lo que se va mostrar
                     html += `<li><h3 class='display-7'>Media:</h3> ` +temp+` </li>`;
