@@ -252,7 +252,7 @@
                     "MTC":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de tendencia central</h3>',
                     "MPOS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
                     "MDIS":'<h3 class="display-6 text-center" style="width:90%!important">Medidas de dispersión</h3>',
-                    "GRAPHICS": '',
+                    "GRAPHICS": '<h3 class="display-6 text-center" style="width:90%!important">Grafica</h3>',
                 }
                 var nextIdx = $this.currentStepIdx;
 
@@ -312,6 +312,11 @@
                     {
                         getValuesForFrequencyTable();
                     }
+                    else if($this.options.title==arrayMedidas["GRAPHICS"])
+                    {
+                        valuesFromHistogram();
+                    }
+                    
                 } else {
                     $this.next.text($this.options.nextText);
                 }

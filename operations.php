@@ -127,7 +127,7 @@ include "components/navbar.html";
 		</li>
 
         <!--TODO:-->
-        <li data-toggle="modal"  data-target="#submitModal" onclick="generateGraphics()">
+        <li data-toggle="modal"  data-target="#submitModal" onclick="generateGraphics();checkColumns();">
         <i class="fas fa-chart-pie" ></i>
             <span class="tooltip">Graficos</span>
         </li>

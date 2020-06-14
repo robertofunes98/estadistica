@@ -264,7 +264,7 @@ function medidasPosicion(){
                     tags: true,
                     theme: 'classic',
                     placeholder: 'Selecciona las columnas',
-                    maximumSelectionLength: 2,
+                    maximumSelectionLength: 1,
                     language: "es-ES"
                 });
             });
@@ -418,12 +418,12 @@ function contaCheckbox(checkItem){
 }
 
 
-//TODO: probando graficos
 function generateGraphics(){
     $('.modal').MultiStep({
-        title:'<h3 class="display-6 text-center" style="width:90%!important">Graficos</h3>',
+        title:'<h3 class="display-6 text-center" style="width:90%!important">Grafica</h3>',
         data:[{
-            content:`
+             content:`
+            <div>
             <script>
             $(document).ready(function() {
                 $('.js-example-basic-multiple').select2({
@@ -435,12 +435,12 @@ function generateGraphics(){
                 });
             });
         </script>
-        <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
+            <label for="cbxOptions">Seleccione la(s) columna(s) donde estan sus datos</label>
             <select class="js-example-basic-multiple form-control" name="columns[]" multiple="multiple" id="cbxOptions" style="padding: 12px 30px;width: 100%;border:0px!important;background-color: #ffc107!important;">
 
             </select>
-            `,
-            label:'Grafico',
+            </div>`,
+            label:'Seleccionar columnas',
             nextText:"Siguiente",
             prevText:'Atras'
         },{
@@ -449,57 +449,49 @@ function generateGraphics(){
                 <p>Seleccione tu gráfica</p>
                 <div class="inputGroup">
                     <input id="0g" name="graph[]" type="radio" checked value="0"/>
-                    <label for="0g">A</label>
+                    <label for="0g">Histogragma</label>
                 </div>
                 <div class="inputGroup">
                     <input id="1g" name="graph[]" type="radio" value="1"/>
-                    <label for="1g">B</label>
+                    <label for="1g">Caja y bigotes</label>
                 </div>
                 <div class="inputGroup">
                     <input id="2g" name="graph[]" type="radio" value="2" />
-                    <label for="2g">C</label>
+                    <label for="2g">Campana de Gauss</label>
                 </div>
             </div>
             `,
             label:'Selecciona tu gráfica',
             nextText:"Siguiente",
             prevText:'Atras'
-       
-    },{
-            content:`
-            
-            
-            <figure class="highcharts-figure">
-                <div id="containerBoxPlot"></div>
-                <p class="highcharts-description">
-                    Chart showing the use of box plots with outliers. The chart makes use
-                    of a plot line to show the theoretical mean value across the y-axis.
-                </p>
-            </figure>
-            `,
-            label:'Personalizar resultados',
-            nextText:"Calcular!",
-            prevText:'Atras'
         }],
-        final:`
-        <div id="resultsPOS"></div>`,
+       final:`
+            <figure class="highcharts-figure">
+                <div id="graphicContainer"></div>
+            </figure>`,
         modalSize:'lg',
         finalLabel:'Resultados',
         prevText:'Atras',
         finishText:'Cerrar'
     });
+}
     function valuesFromHistogram(){
+        columns = [];
         operation = [];
         graphs= $("input[name='graph[]']:checked").val();
-        $('#cbxOptions').each(function() {
-            columns.push($(this).val());
+            $('#cbxOptions').each(function() {
+                columns.push($(this).val());
             });
-   
-    
+
+           if(graphs==0){
+                    generateHistogram(columns);
+            }else if(graphs==1){
+                    generateBoxPlot(columns);
+            }else if(graphs==2){
+                    generateBellCurve(columns);
+            }
     }
 
-    generateHistogram(0);
-    generateBoxPlot(0);
-    generateBellCurve(0);
-}
+ 
+
 
