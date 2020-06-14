@@ -138,7 +138,7 @@ function tablaDeFrecuencias(){
                         tags: true,
                         theme: 'classic',
                         placeholder: 'Selecciona las columnas',
-                        maximumSelectionLength: 2,
+                        maximumSelectionLength: 999,
                         language: "es"
                     });
                 });
