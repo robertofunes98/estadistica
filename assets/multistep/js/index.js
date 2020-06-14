@@ -264,7 +264,7 @@ function medidasPosicion(){
                     tags: true,
                     theme: 'classic',
                     placeholder: 'Selecciona las columnas',
-                    maximumSelectionLength: 2,
+                    maximumSelectionLength: 1,
                     language: "es-ES"
                 });
             });
