@@ -6,7 +6,7 @@
     width: 80px;
     float: left;
     position: fixed;
-    display:contents;
+    margin-top: 10%;
     align-items: center;
     animation-duration: 3s;
     animation-timing-function: ease-in-out;
@@ -21,6 +21,7 @@
     cursor: pointer;
     -webkit-transition: all ease-out 120ms;
     transition: all ease-out 120ms;
+    max-height: 200px;
   }
   .sidebar-navigation ul li i {
     display: block;
@@ -42,6 +43,8 @@
     font-size: 13px;
     letter-spacing: .5px;
     width: 120px;
+    position: fixed;
+    display: contents;
   }
   .sidebar-navigation ul li .tooltip:before {
     content: '';
@@ -54,6 +57,7 @@
     width: 10px;
     height: 10px;
     background-color: inherit;
+
   }
   .sidebar-navigation ul li:hover {
     animation-duration: 3s;
