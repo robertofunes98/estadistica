@@ -261,7 +261,6 @@ function generateFrequencyTableForNonWorkedData(colIndex)
 
 function calculateMeasuresOfCentralTendency(colIndex)
 {
-
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
