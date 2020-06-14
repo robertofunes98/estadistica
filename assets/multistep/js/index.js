@@ -497,14 +497,8 @@ function generateGraphics(){
     
     }
 
-<<<<<<< HEAD
-     
-    //generateHistogram(0);
-    generateBoxPlot(1);
-=======
     generateHistogram(0);
     generateBoxPlot(0);
     generateBellCurve(0);
->>>>>>> 7134be982c3c3378434570d1f0a248d00594cfd5
 }
 
