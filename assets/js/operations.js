@@ -604,7 +604,24 @@ function centralTendence(agroupNumbers,columns,operations){
                         }
                         else{
                             //añado la respuesta a lo que se va mostrar
-                            temp+=jStat.mode(dataToWork).toFixed(2);
+                            let response = jStat.mode(dataToWork);
+
+                            if(response.length > 1)
+                            {
+                                temp+= 'Hay más de una moda: <br>';
+
+                                for (let i = 0; i < response.length; i++)
+                                {
+                                    temp+= response[i];
+
+                                    if(i !== (response.length -1))
+                                        temp +=  ' - ';
+                                }
+                            }
+                            else
+                            {
+                                temp += jStat.mode(dataToWork);
+                            }
                         }
                     html += `<li><h3 class='display-7'>Moda:</h3>  ` +temp+` </li>`;
                     break;
