@@ -261,7 +261,6 @@ function generateFrequencyTableForNonWorkedData(colIndex)
 
 function calculateMeasuresOfCentralTendency(colIndex)
 {
-
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
@@ -1086,7 +1085,6 @@ function dispersionMeasure(groupNumbers,columns,operation,znumber){
         return html;
         
 }
-
 
 function freqTable(groupNumbers,columnsRequired,columns){
     console.log(columns);
