@@ -1219,7 +1219,7 @@ function generateHistogram(colIndex)
 
         evaluationDataClean = stringArrayToNumber(evaluationDataClean);
 
-        Highcharts.chart('histogramContainer', {
+        Highcharts.chart('graphicContainer', {
             title: {
                 text: 'Histograma'
             },
@@ -1329,7 +1329,7 @@ function generateBoxPlot(colIndex)
 
     let quartiles = quartielsCorrectly(evaluationDataClean);
 
-    Highcharts.chart('containerBoxPlot', {
+    Highcharts.chart('graphicContainer', {
 
 
         chart: {
@@ -1381,4 +1381,63 @@ function quartielsCorrectly(array)
     let x5 =  array[array.length -1];
 
     return [x1,x2,x3,x4,x5];
+}
+
+
+function generateBellCurve(colIndex)
+{
+    var data = htDataGrid.getSourceDataAtCol(colIndex);
+
+    let dataInfo = getInfoFromNonWorkedData(colIndex);
+
+    let evaluationDataClean = dataInfo[0];
+
+    evaluationDataClean = stringArrayToNumber(evaluationDataClean);
+
+    Highcharts.chart('graphicContainer', {
+
+        title: {
+            text: 'Bell curve'
+        },
+
+        xAxis: [{
+            title: {
+                text: 'Data'
+            },
+            alignTicks: false
+        }, {
+            title: {
+                text: 'Bell curve'
+            },
+            alignTicks: false,
+            opposite: true
+        }],
+
+        yAxis: [{
+            title: { text: 'Data' }
+        }, {
+            title: { text: 'Bell curve' },
+            opposite: true
+        }],
+
+        series: [{
+            name: 'Bell curve',
+            type: 'bellcurve',
+            xAxis: 1,
+            yAxis: 1,
+            baseSeries: 1,
+            zIndex: -1
+        }, {
+            name: 'Data',
+            type: 'scatter',
+            data: evaluationDataClean,
+            accessibility: {
+                exposeAsGroupOnly: true
+            },
+            marker: {
+                radius: 1.5
+            },
+            visible:false
+        }]
+    });
 }

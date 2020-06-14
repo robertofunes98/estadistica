@@ -418,7 +418,7 @@ function contaCheckbox(checkItem){
 
 
 //TODO: probando graficos
-function histogram(){
+function generateGraphics(){
     $('.modal').MultiStep({
         title:'<h3 class="display-6 text-center" style="width:90%!important">Graficos</h3>',
         data:[{
@@ -439,7 +439,7 @@ function histogram(){
 
             </select>
             `,
-            label:'Seleccionar columnas',
+            label:'Grafico',
             nextText:"Siguiente",
             prevText:'Atras'
         },{
@@ -497,8 +497,14 @@ function histogram(){
     
     }
 
+<<<<<<< HEAD
      
     //generateHistogram(0);
     generateBoxPlot(1);
+=======
+    generateHistogram(0);
+    generateBoxPlot(0);
+    generateBellCurve(0);
+>>>>>>> 7134be982c3c3378434570d1f0a248d00594cfd5
 }
 
