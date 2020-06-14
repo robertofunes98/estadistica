@@ -21,7 +21,7 @@
     cursor: pointer;
     -webkit-transition: all ease-out 120ms;
     transition: all ease-out 120ms;
-    max-height: 200px;
+    max-height: 124px;
   }
   .sidebar-navigation ul li i {
     display: block;
@@ -43,8 +43,8 @@
     font-size: 13px;
     letter-spacing: .5px;
     width: 120px;
-    position: fixed;
     display: contents;
+    
   }
   .sidebar-navigation ul li .tooltip:before {
     content: '';
