@@ -1219,7 +1219,7 @@ function generateHistogram(colIndex)
 
         evaluationDataClean = stringArrayToNumber(evaluationDataClean);
 
-        Highcharts.chart('histogramContainer', {
+        Highcharts.chart('graphicContainer', {
             title: {
                 text: 'Histograma'
             },
@@ -1329,7 +1329,7 @@ function generateBoxPlot(colIndex)
 
     let quartiles = quartielsCorrectly(evaluationDataClean);
 
-    Highcharts.chart('containerBoxPlot', {
+    Highcharts.chart('graphicContainer', {
 
 
         chart: {
@@ -1394,7 +1394,7 @@ function generateBellCurve(colIndex)
 
     evaluationDataClean = stringArrayToNumber(evaluationDataClean);
 
-    Highcharts.chart('containerGaussBell', {
+    Highcharts.chart('graphicContainer', {
 
         title: {
             text: 'Bell curve'

@@ -415,52 +415,20 @@ function contaCheckbox(checkItem){
 
 
 //TODO: probando graficos
-function histogram(){
+function generateGraphics(){
     $('.modal').MultiStep({
         title:'<h3 class="display-6 text-center" style="width:90%!important">Medidas de posición</h3>',
         data:[{
             content:`
             <figure class="highcharts-figure">
-                <div id="histogramContainer"></div>
-                <p class="highcharts-description">
-                    
-                </p>
+                <div id="graphicContainer"></div>
+             
             </figure>
             `,
-            label:'Seleccionar columnas',
+            label:'Grafico',
             nextText:"Siguiente",
             prevText:'Atras'
-        },{
-            content:`
-            
-            
-            <figure class="highcharts-figure">
-                <div id="containerBoxPlot"></div>
-                <p class="highcharts-description">
-                    Chart showing the use of box plots with outliers. The chart makes use
-                    of a plot line to show the theoretical mean value across the y-axis.
-                </p>
-            </figure>
-            `,
-            label:'Personalizar resultados',
-            nextText:"Calcular!",
-            prevText:'Atras'
-        },{
-            content:`
-            
-            
-            <figure class="highcharts-figure">
-                <div id="containerGaussBell"></div>
-                <p class="highcharts-description">
-                    Chart showing the use of box plots with outliers. The chart makes use
-                    of a plot line to show the theoretical mean value across the y-axis.
-                </p>
-            </figure>
-            `,
-                label:'Personalizar resultados',
-                nextText:"Calcular!",
-                prevText:'Atras'
-            }],
+        }],
         final:`
         <div id="resultsPOS"></div>`,
         modalSize:'lg',
@@ -469,7 +437,7 @@ function histogram(){
         finishText:'Cerrar'
     });
 
-    //generateHistogram(0);
+    generateHistogram(0);
     generateBoxPlot(0);
     generateBellCurve(0);
 }

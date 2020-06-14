@@ -127,9 +127,9 @@ include "components/navbar.html";
 		</li>
 
         <!--TODO:-->
-        <li data-toggle="modal"  data-target="#submitModal" onclick="histogram()">
+        <li data-toggle="modal"  data-target="#submitModal" onclick="generateGraphics()">
         <i class="fas fa-chart-bar" ></i>
-            <span class="tooltip">Histograma</span>
+            <span class="tooltip">Graficos</span>
         </li>
 	</ul>
 </nav>
