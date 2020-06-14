@@ -1169,7 +1169,7 @@ function generateHistogram(colIndex)
 
         let histogramLineArray = getHistogramLineArray([evaluateDataArray, frequencyData], true);
 
-        Highcharts.chart('histogramContainer', {
+        Highcharts.chart('graphicContainer', {
             chart: {
                 type: 'column'
             },
