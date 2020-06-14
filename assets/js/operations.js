@@ -101,6 +101,12 @@ function countUnique(iterable) {
 
 function getInfoFromNonWorkedData(colIndex)
 {
+    if(colIndex[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
+
     let evaluationData = htDataGrid.getSourceDataAtCol(colIndex);
 
     let evaluationDataClean = evaluationData.filter(Boolean);
@@ -144,6 +150,12 @@ function getInfoFromNonWorkedData(colIndex)
 
 function generateFrequencyTableForNonWorkedData(colIndex)
 {
+    if(colIndex[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
+
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
@@ -261,6 +273,12 @@ function generateFrequencyTableForNonWorkedData(colIndex)
 
 function calculateMeasuresOfCentralTendency(colIndex)
 {
+    if(colIndex[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
+
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
@@ -411,6 +429,12 @@ function generateFrequencyArrayForGroupedData(evaluationDataClean)
 
 function generateFrequencyTableForWorkedData(variablesToEvaluate)
 {
+    if(variablesToEvaluate[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
+
     let evaluationDataClean = [];
     var evaluationVariableNameClean = [];
 
@@ -1139,6 +1163,12 @@ function stringArrayToNumber(evaluationDataClean)
   //TODO: probando graficos
 function generateHistogram(colIndex)
 {
+    if(colIndex[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
+
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
@@ -1368,6 +1398,12 @@ function evaluateDataType(evaluationDataClean)
 
 function generateBoxPlot(colIndex)
 {
+    if(colIndex[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
+
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
@@ -1446,8 +1482,11 @@ function quartielsCorrectly(array)
 
 function generateBellCurve(colIndex)
 {
-    var data = htDataGrid.getSourceDataAtCol(colIndex);
-
+    if(colIndex[0].length == 0)
+    {
+        alert("No selecciono ninguna columna");
+        return;
+    }
     let dataInfo = getInfoFromNonWorkedData(colIndex);
 
     let evaluationDataClean = dataInfo[0];
