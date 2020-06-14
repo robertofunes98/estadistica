@@ -127,7 +127,7 @@ function getInfoFromNonWorkedData(colIndex)
 
     if(cualitative > 0 && cuantitative > 0)
     {
-        alert("Revise el tipo de datos, hay datos cualitativos y cunatitativos en la misma variable");
+        alert("Revise el tipo de datos, hay datos cualitativos y cuantitativos en la misma variable");
         return;
     }
     else
@@ -1376,14 +1376,14 @@ function generateBoxPlot(colIndex)
     switch (evaluateDataType(evaluationDataClean))
     {
         case 0:
-            $('#graphicContainer').html('Los datos son cualitativos, por favor ingrese datos cuantitativos para poderlos trabajar');
-            break;
+            alert('Los datos son cualitativos, por favor ingrese datos cuantitativos para poderlos trabajar');
+            return;
         case 2:
-            $('#graphicContainer').html('Los datos contienen caracteres imposibles de evaluar');
-            break;
+            alert('Los datos contienen caracteres imposibles de evaluar');
+            return;
         case 3:
-            $('#graphicContainer').html('Los datos estan mezclados entre cualitativos y cunatitativos, por favor ingrese solo datos cuantitativos para poderlos trabajar');
-            break;
+            alert('Los datos estan mezclados entre cualitativos y cunatitativos, por favor ingrese solo datos cuantitativos para poderlos trabajar');
+            return;
         case 1:
             evaluationDataClean = stringArrayToNumber(evaluationDataClean);
 
@@ -1452,52 +1452,67 @@ function generateBellCurve(colIndex)
 
     let evaluationDataClean = dataInfo[0];
 
-    evaluationDataClean = stringArrayToNumber(evaluationDataClean);
+    //retorna 0 = cualitativa, 1 = cunatitativa, 2 = imposible evaluar, 3 = datos mixtos
+    switch (evaluateDataType(evaluationDataClean)) {
+        case 0:
+            alert('Los datos son cualitativos, por favor ingrese datos cuantitativos para poderlos trabajar');
+            return;
+        case 2:
+            alert('Los datos contienen caracteres imposibles de evaluar');
+            return;
+        case 3:
+            alert('Los datos estan mezclados entre cualitativos y cunatitativos, por favor ingrese solo datos cuantitativos para poderlos trabajar');
+            return;
+        case 1:
+            evaluationDataClean = stringArrayToNumber(evaluationDataClean);
 
-    Highcharts.chart('graphicContainer', {
+            Highcharts.chart('graphicContainer', {
 
-        title: {
-            text: 'Bell curve'
-        },
+                title: {
+                    text: 'Bell curve'
+                },
 
-        xAxis: [{
-            title: {
-                text: 'Data'
-            },
-            alignTicks: false
-        }, {
-            title: {
-                text: 'Bell curve'
-            },
-            alignTicks: false,
-            opposite: true
-        }],
+                xAxis: [{
+                    title: {
+                        text: 'Data'
+                    },
+                    alignTicks: false
+                }, {
+                    title: {
+                        text: 'Bell curve'
+                    },
+                    alignTicks: false,
+                    opposite: true
+                }],
 
-        yAxis: [{
-            title: { text: 'Data' }
-        }, {
-            title: { text: 'Bell curve' },
-            opposite: true
-        }],
+                yAxis: [{
+                    title: { text: 'Data' }
+                }, {
+                    title: { text: 'Bell curve' },
+                    opposite: true
+                }],
 
-        series: [{
-            name: 'Bell curve',
-            type: 'bellcurve',
-            xAxis: 1,
-            yAxis: 1,
-            baseSeries: 1,
-            zIndex: -1
-        }, {
-            name: 'Data',
-            type: 'scatter',
-            data: evaluationDataClean,
-            accessibility: {
-                exposeAsGroupOnly: true
-            },
-            marker: {
-                radius: 1.5
-            },
-            visible:false
-        }]
-    });
+                series: [{
+                    name: 'Bell curve',
+                    type: 'bellcurve',
+                    xAxis: 1,
+                    yAxis: 1,
+                    baseSeries: 1,
+                    zIndex: -1
+                }, {
+                    name: 'Data',
+                    type: 'scatter',
+                    data: evaluationDataClean,
+                    accessibility: {
+                        exposeAsGroupOnly: true
+                    },
+                    marker: {
+                        radius: 1.5
+                    },
+                    visible:false
+                }]
+            });
+            return;
+    }
+
 }
